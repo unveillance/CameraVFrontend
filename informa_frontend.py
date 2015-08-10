@@ -70,33 +70,33 @@ class InformaFrontend(UnveillanceFrontend):
 				'/web/js/models/ic_j3m.js',
 #				'/web/js/models/ic_image.js',
 #				'/web/js/models/ic_submission.js',
-				'/web/js/modules/ic_submission.js',
+				'/web/js/controllers/ic_submission.js',
 				'/web/js/ic_tsv_export.js',
 				'/web/css/ic_viz.css'
 			],
 			'source' : [
 				'/web/js/models/unveillance_document.js',
 				'/web/js/models/ic_source.js',
-				'/web/js/modules/ic_source.js'
+				'/web/js/controllers/ic_source.js'
 			],
 			'main' : [
 				'/web/js/lib/dropzone.js',
 				'/web/js/models/ic_search.js',
 				'/web/js/models/unveillance_dropzone.js',
 				'/web/js/models/ic_document_browser.js',
-				'/web/js/modules/main.js'],
+				'/web/js/controllers/main.js'],
 			'search' :[
 				'/web/js/models/ic_search.js',
 				'/web/js/models/ic_document_browser.js',
 				'/web/js/models/ic_j3m.js',
 				'/web/js/ic_tsv_export.js',
-				'/web/js/modules/ic_search.js',
+				'/web/js/controllers/ic_search.js',
 				'/web/css/ic_viz.css'
 			],
 			'unveil' : [
 				'/web/js/modules/uv_unveil.js',
 				'/web/js/models/unveillance_task_pipe.js',
-				'/web/js/modules/ic_unveil.js'
+				'/web/js/controllers/ic_unveil.js'
 			],
 			'landing' : [
 				'/web/css/tabs.css',
@@ -105,8 +105,8 @@ class InformaFrontend(UnveillanceFrontend):
 				'/web/js/models/unveillance_dropzone.js',
 				'/web/js/models/ic_dropzone.js',
 				'/web/js/models/ic_document_browser.js',
-				'/web/js/modules/ic2_search.js',
-				'/web/js/modules/ic_landing.js'
+				'/web/js/controllers/ic2_search.js',
+				'/web/js/controllers/ic_landing.js'
 			],				
 			'simple' : [
 				'/web/js/lib/dropzone.js',
@@ -115,19 +115,19 @@ class InformaFrontend(UnveillanceFrontend):
 		})
 		
 		self.on_loads_by_status[1].extend([
-			'/web/js/modules/ic_login.js',
+			'/web/js/controllers/ic_login.js',
 			'/web/js/models/unveillance_user.js'
 		])
 		
 		self.on_loads_by_status[2].extend([
 			'/web/js/models/unveillance_user.js',
-			'/web/js/modules/ic_logout.js',
+			'/web/js/controllers/ic_logout.js',
 			'/web/js/models/ic_user.js'
 		])
 		
 		self.on_loads_by_status[3].extend([
 			'/web/js/models/unveillance_user.js',
-			'/web/js/modules/ic_logout.js',
+			'/web/js/controllers/ic_logout.js',
 			'/web/js/models/ic_user.js',
 			'/web/js/models/ic_user_admin.js'
 		])
