@@ -1,0 +1,16 @@
+<ul id="ic_submission_info_list">
+	<li>Date Added: <span class="uv_translate uv_date">{{ date_added }}</span></li>
+	<li>Mime Type: {{ mime_type }}</li>
+	<li>Assets:
+		<ul id="ic_submission_asset_list">
+			{{ #assets }}
+			<li>{{ file_name }} ({{ description }})</li>
+			{{ /assets }}
+		</ul>
+	</li>
+	<!--
+	<li>Keywords:
+		<ul id="ic_submission_keyword_list"></ul>
+	</li>
+	-->
+</ul>

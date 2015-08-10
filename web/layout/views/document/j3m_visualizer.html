@@ -1,0 +1,79 @@
+<div>
+	<h4>J3M Data</h4>
+	<ul id="ic_info_holder">
+		<li>
+			<div class="ic_pod">
+				<p>Date Created: <span class="uv_translate uv_date">{{ j3m.genealogy.dateCreated }}</span></p>
+			</div>
+		</li>
+		
+		<li>
+			<div class="ic_pod">
+				<p>Time Admitted: <span class="uv_translate uv_date">{{ date_added }}</span></p>
+			</div>
+		</li>
+		
+		<li>
+			<div class="ic_pod">
+				<p>Type: {{ mime_type }}</p>
+			</div>
+		</li>
+		
+		<li>
+			<div class="ic_pod">
+				<p>J3M Signature Verified: <img class="ic_icon" src="/web/images/ic_{{ j3m_verified }}.png" repl="ic_" /></p>
+			</div>
+		</li>
+		
+		<li>
+			<div class="ic_pod">
+				<p>Submitted by: <a href="/#advanced_search?genealogy.createdOnDevice={{ j3m.intent.pgpKeyFingerprint }}&mime_type=informacam/j3m&cast_as=media_id"><span class="uv_translate uv_unknown_if_null">{{ j3m.intent.alias }}</span> (<span class="uv_translate uv_none_if_null">{{ j3m.intent.pgpKeyFingerprint }}</span>)</a></p>
+			</div>
+		</li>
+		
+		<li>
+			<div class="ic_pod">
+				<p>Export J3M 
+					<select id="ic_j3m_export_select">
+						<option value="null">as...</option>
+						<option value="json">json</option>
+						<option value="csv">csv</option>
+						<option value="tsv">tsv</option>
+						<option value="html">html</option>
+					</select>
+				</p>
+			</div>
+			<script type="text/javascript">
+				$("#ic_j3m_export_select").change(function() {
+					if($(this).val() != "null") {
+						try {
+							var ic_export = current_asset.get('j3m')
+								.exportAs($(this).val());
+						} catch(err) {
+							console.warn(err);
+						}
+						
+						if(ic_export) {
+							console.info(ic_export);
+						}
+					}
+				});
+			</script>
+		</li>
+		
+		<li>
+			<div class="ic_pod" id="ic_j3m_readout_header">
+				<p><a onclick="toggleElement('#ic_j3m_readout_holder');">View raw J3M data</a></p>
+				<p id="ic_j3m_readout_header_is_sampled">In order to provide a better viewing experience, the J3M data has been sampled.  If you need access to the full J3M, please download it and open it in your editor of choice.</p>
+				<script>
+					if(!current_asset.get('j3m').is_sampled) {
+						$("#ic_j3m_readout_header_is_sampled").css('display', 'none');
+					}
+				</script>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<div id="ic_j3m_readout_holder" style="display:none;"></div>
+<div id="ic_j3m_visualizer"></div>
