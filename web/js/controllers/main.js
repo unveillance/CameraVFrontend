@@ -4,43 +4,96 @@ function failOut() {
 	$("#ic_content_header").html("Sorry.  No documents found.");
 }
 
-function onConfLoaded() {
-	try {
-		documents = new InformaCamDocumentBrowser(_.extend(
-			doInnerAjax("documents", "post", 
-				{ mime_type : "[" + UV.DEFAULT_MIME_TYPES.join() + "]", doc_type : "uv_document" }, null, false),
-			{ root_el : $("#ic_document_browser") }));
+var Main = {
+	onConfLoaded: function() {
+		try {
+			documents = new InformaCamDocumentBrowser(_.extend(
+				doInnerAjax("documents", "post", 
+					{ mime_type : "[" + UV.DEFAULT_MIME_TYPES.join() + "]", doc_type : "uv_document" }, null, false),
+				{ root_el : $("#ic_document_browser") }));
 
-		if(documents.get('result') != 200) {
+			if(documents.get('result') != 200) {
+				failOut();
+				return;
+			}
+
+			documents.unset('result');
+		} catch(err) {
+			console.error(err);
 			failOut();
+		}
+	},
+};
+
+/* modified from Svet's ic_landing.js */
+jQuery(document).ready(function($) {
+	$( '#tabs' ).find( '.controls' ).find( 'a' ).click( function( e ){
+		
+		e.preventDefault();
+	
+		var el = $( this );
+		
+		if (el.parent( 'li' ).hasClass('disabled')) {
 			return;
 		}
-
-		documents.unset('result');
-
-		$("#content")
-			.prepend(getTemplate("search.html", null, "/web/layout/views/module/"));
-
-		search = new InformaCamSearch({
-			search_el : $("#ic_visual_search_holder"),
-			advanced_el : $("#ic_extended_search_holder"),
-			result_el : $("#ic_search_view_holder")
-		});
-	} catch(err) {
-		console.error(err);
-		failOut();
-	}
-}
-
-(function($) {
-	var content_sammy = $.sammy("#content", function() {
-
-		this.get('/#import', function() {
-			loadHeaderPopup("import");
-		});
-	});
 	
-	$(function() {
+		el.parents( 'ul' ).find( 'li' ).removeClass( 'active' );
+		el.parent( 'li' ).addClass( 'active' );
+		el.parents('ul').siblings('div.active').removeClass( 'active' );
+		$( '#tabs' ).find( el.attr( 'href' ) ).addClass( 'active' );
+
+		$('#ic_search_button')
+			.before($($("input[name='_xsrf']")[0]).clone());
+	
+	} );
+	
+	$("#ic_url_search_button").click(function() {
+			//alert($("#ic_search_url").val());
+			return doInnerAjax("SubmitViaURL", "post", {
+			url : $("#ic_search_url").val() }, function(message){
+				console.log(message);
+			
+				try {
+					json = JSON.parse(message.responseText);
+				} catch(err) {
+					alert("Could not upload file from URL!");
+					return;
+				}
+			
+				if(json.result == 200) {
+					path = json.data.mime_type !== undefined && json.data.mime_type.indexOf("application/pgp") > -1 ? "/source/" : "/submission/";
+					location.href = path + json.data._id + '/';
+				} else {
+					alert("Could not upload file from URL!");
+				}
+			
+			});
+		});
+	
+	
+	discoverICDropzones({url : "/import/"}, "#ic_import_dropzone_holder",
+		function(file, message) {
+			// onSuccess
+			console.log(message);
+			path = message.data.mime_type !== undefined && message.data.mime_type.indexOf("application/pgp") > -1 ? "/source/" : "/submission/";
+			location.href = path + message.data._id + '/';
+		},
+		function(file, message) {
+			// onError
+			console.error(message);
+			messagetext = '';
+			if (typeof message !== null && typeof message === 'object') {
+				if (message.result == 403) {
+					messagetext = "It's not you, it's us. We're looking into the problem. Please try again later. (" + message.result + ")";
+					this.disable();
+				}
+			} else {
+				messagetext = message;
+			}
+			return file.previewElement.querySelector("[data-dz-errormessage]").textContent = messagetext;
+		});
+
+
 		try {
 			updateConf();
 		} catch(err) {
@@ -49,12 +102,15 @@ function onConfLoaded() {
 		}
 		
 		try {
-			onConfLoaded();
+			Main.onConfLoaded();
+			Search.onConfLoaded();
 		} catch(err) {
 			console.warn(err);
 			console.warn("no onConfLoaded()");
 		}
-		
-		content_sammy.run();
-	});
-})(jQuery);
+});
+
+function $c(msg) {
+	console.log(msg);
+}
+

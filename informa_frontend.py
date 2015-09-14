@@ -80,11 +80,16 @@ class InformaFrontend(UnveillanceFrontend):
 				'/web/js/controllers/ic_source.js'
 			],
 			'main' : [
+				'/web/css/reset.css',
+				'/web/css/tabs.css',
 				'/web/js/lib/dropzone.js',
 				'/web/js/models/ic_search.js',
 				'/web/js/models/unveillance_dropzone.js',
+				'/web/js/models/ic_dropzone.js',
 				'/web/js/models/ic_document_browser.js',
-				'/web/js/controllers/main.js'],
+				'/web/js/controllers/ic_search.js',
+				'/web/js/controllers/main.js'
+			],				
 			'search' :[
 				'/web/js/models/ic_search.js',
 				'/web/js/models/ic_document_browser.js',
@@ -94,7 +99,7 @@ class InformaFrontend(UnveillanceFrontend):
 				'/web/css/ic_viz.css'
 			],
 			'unveil' : [
-				'/web/js/modules/uv_unveil.js',
+				'/web/js/controllers/uv_unveil.js',
 				'/web/js/models/unveillance_task_pipe.js',
 				'/web/js/controllers/ic_unveil.js'
 			],

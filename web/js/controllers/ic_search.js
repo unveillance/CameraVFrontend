@@ -19,45 +19,30 @@ function loadSearchResult(search_result) {
 	$("#ic_export_holder").append(getTemplate("export.html"));
 }
 
-function onConfLoaded() {
-	$("#content").prepend(getTemplate("search.html", null, "/web/layout/views/module/"));
+var Search = {
+	onConfLoaded: function() {
+		$("#search_content").append(getTemplate("search.html", null, "/web/layout/views/module/"));
 	
-	window.setTimeout(function() {
-		search = new InformaCamSearch({
-			search_el : $("#ic_visual_search_holder"),
-			advanced_el : $("#ic_extended_search_holder"),
-			result_el : $("#ic_search_view_holder")
-		});
+		window.setTimeout(function() {
+			search = new InformaCamSearch({
+				search_el : $("#ic_visual_search_holder"),
+				advanced_el : $("#ic_extended_search_holder"),
+				result_el : $("#ic_search_view_holder")
+			});
 
-		if(window.location.search == "") { return; }
+			if(window.location.search == "") { return; }
 
-		loadSearchResult(search.perform(window.location.search));
+			loadSearchResult(search.perform(window.location.search));
 		
-		$('#ic_search_results_holder input[type=checkbox]').change(function() {
-			var hash = $(this).attr('data-hash');
-			if ($(this).is(':checked')) {
-				app.addDatasetToTSV(hash);
-			} else {
-				app.removeDatasetFromTSV(hash);
-			}
-		});
+			$('#ic_search_results_holder input[type=checkbox]').change(function() {
+				var hash = $(this).attr('data-hash');
+				if ($(this).is(':checked')) {
+					app.addDatasetToTSV(hash);
+				} else {
+					app.removeDatasetFromTSV(hash);
+				}
+			});
 
-	}, 100);
-}
-
-$(function() {
-	try {
-		updateConf();
-	} catch(err) {
-		console.warn(err);
-		console.warn("no updateConf()");
-	}
-	
-	try {
-		onConfLoaded();
-	} catch(err) {
-		console.warn(err);
-		console.warn("no onConfLoaded()");
-	}
-	
-});
+		}, 100);
+	},
+};

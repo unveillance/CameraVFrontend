@@ -1,3 +1,68 @@
-<div id="ic_document_browser_holder">
-	<ul id="ic_document_browser"></ul>
-</div>
+<div id="tabs">
+            
+    <ul class="controls inline clearfix">
+        <li class="active"><a href="#file">File</a></li>
+        <li class="disabled"><a href="#notes">Notes</a></li>
+        <li class="disabled"><a href="#export">Export</a></li>
+        <li class="xdisabled"><a href="#metadata">Metadata</a></li>
+        <li id="search_tab"><a href="#search">Search</a></li>
+    </ul>
+    
+    <div id="file" class="block active">
+        <div class="tab_content">
+			<h2 id="ic_upload_instructions_desktop" class="ic_upload_instructions">Drop an image, video, or j3m log<br>or click here to upload</h2>
+			<h2 id="ic_upload_instructions_smartphone" class="ic_upload_instructions">Tap here to upload an image or video</h2>
+			<div id="ic_import_dropzone_holder">
+			<input type="file" name="uv_import" />
+			</div>
+
+	        <span class="errormessage"></span>
+		</div>
+    </div><!--/end .file-->
+    
+    <div id="notes" class="block">
+        <div class="tab_content">
+ 		</div>
+    </div><!--/end .notes-->
+    
+    <div id="export" class="block clearfix">
+        <div class="tab_content">
+        	Export
+	    </div>
+    </div><!--/end .export-->
+    
+    <div id="metadata" class="block clearfix">
+        <div class="tab_content">
+			<ul class="controls inline clearfix">
+				<li class="active"><a href="#meta_header">Header</a></li>
+				<li><a href="#meta_wrapper">Document Wrapper</a></li>
+				<li><a href="#meta_sensors">Device Sensors</a></li>
+			</ul>
+			
+			<div id="meta_header" class="block active">
+				<div class="tab_content">
+				head
+				</div>
+			</div><!--/end #meta_header-->
+			
+			<div id="meta_wrapper" class="block">
+				<div class="tab_content">
+				wrap
+				</div>
+			</div><!--/end .meta_wrapper-->
+			
+			<div id="meta_sensors" class="block">
+				<div class="tab_content">
+				sensors
+				</div>
+			</div><!--/end .meta_sensors-->
+	    </div>
+    </div><!--/end .metadata-->
+    
+    <div id="search" class="block clearfix">
+        <div class="tab_content">
+	    	<div id="search_content"></div>
+	    </div>
+    </div><!--/end .search-->
+    
+</div><!--/end #tabs-->
