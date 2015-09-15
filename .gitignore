@@ -1,0 +1,14 @@
+.DS_Store
+.Trash-1000
+*.pyc
+
+.venv/
+.users/
+.gpg/
+
+conf/*.config.yaml
+conf/informacam.*
+conf/*.secrets.json
+
+test.*
+lib/Frontend
