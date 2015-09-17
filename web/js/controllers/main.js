@@ -29,7 +29,7 @@ var Main = {
 jQuery(document).ready(function($) {
 	$( '#tabs' ).find( '.controls' ).find( 'a' ).click( function( e ){
 		
-		e.preventDefault();
+//		e.preventDefault();
 	
 		var el = $( this );
 		
@@ -108,6 +108,36 @@ jQuery(document).ready(function($) {
 			console.warn(err);
 			console.warn("no onConfLoaded()");
 		}
+		
+		
+//Jonny revised search mockup 09/2015
+$('#advanced').click(function() {
+	$('.search_advanced').show();
+});
+
+$('.search_options_main select').change(function() {
+	option = $(this).val();
+	$c(option);
+	$('.search_option').hide();
+	$('.' + option + '_options').show();
+});
+
+$('.by_date_created_options select').change(function() {
+	option = $(this).val();
+	$c(option);
+	if (option == 'date_created_on') {
+		$('.search_date_start, .search_date_end').hide();
+		$('.search_date').show();
+	} else {
+		$('.search_date_start, .search_date_end').show();
+		$('.search_date').hide();
+	}
+});
+
+$('.search_advanced .search_plus, .search_advanced .search_plus').click(function(){
+	alert('This doesn\'t do anything yet, but it will allow the user to add or remove a set of search criteria.');
+});
+
 });
 
 function $c(msg) {

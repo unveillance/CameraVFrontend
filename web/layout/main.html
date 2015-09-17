@@ -1,14 +1,14 @@
 <div id="tabs">
             
     <ul class="controls inline clearfix">
-        <li class="active"><a href="#file">File</a></li>
+        <li class=""><a href="#file">File</a></li>
         <li class="disabled"><a href="#notes">Notes</a></li>
         <li class="disabled"><a href="#export">Export</a></li>
-        <li class="xdisabled"><a href="#metadata">Metadata</a></li>
-        <li id="search_tab"><a href="#search">Search</a></li>
+        <li class="disabled"><a href="#metadata">Metadata</a></li>
+        <li id="search_tab" class="active"><a href="#search_holder">Search</a></li>
     </ul>
     
-    <div id="file" class="block active">
+    <div id="file" class="block">
         <div class="tab_content">
 			<h2 id="ic_upload_instructions_desktop" class="ic_upload_instructions">Drop an image, video, or j3m log<br>or click here to upload</h2>
 			<h2 id="ic_upload_instructions_smartphone" class="ic_upload_instructions">Tap here to upload an image or video</h2>
@@ -59,10 +59,10 @@
 	    </div>
     </div><!--/end .metadata-->
     
-    <div id="search" class="block clearfix">
+    <div id="search_holder" class="block clearfix active">
         <div class="tab_content">
 	    	<div id="search_content"></div>
 	    </div>
-    </div><!--/end .search-->
+    </div><!--/end #search_holder-->
     
 </div><!--/end #tabs-->

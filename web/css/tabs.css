@@ -14,7 +14,6 @@ div.tab_content {
 	left:15px;
 	right:15px;
 	bottom:0;
-	background:#800;
 }
 
 /* the jq tabs */
@@ -54,7 +53,7 @@ div.tab_content {
   width: 45.96429%;
 }
 
-#tabs ul.controls a {
+#tabs ul.controls a, .tab_content a.uv_button {
   padding: 0.63333em;
   display: block;
   background: #777;
@@ -80,7 +79,6 @@ div.tab_content {
 }
 
 #metadata div.tab_content {
-	background:#080;
 }
 
 #tabs ul.controls a:hover {
@@ -109,9 +107,6 @@ div.tab_content {
   	margin: 0.5em;
 }
 
-.tab_content a.uv_button {
-  	margin-top: 100em;
-}
 .ic_url_instructions {
 	display:none;
 }
@@ -226,6 +221,64 @@ and (max-device-width : 480px) {
 	bottom:0;
 	right:0;
 }
+
+#search_content {
+	width:50%;
+	height:50%;
+	min-height:300px;
+	max-width:900px;
+	min-width:650px;
+	margin:auto;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	position:absolute;
+}
+
+#ic_search_button {
+	width: 120px;
+	position:absolute;
+	right:0;
+}
+
+/* SEARCH MOCKUP 9/20015 JONNY */
+.search_button {
+	display:inline-block;
+	width:20px;
+	height:20px;
+	position:relative;
+	top:5px;
+	cursor:pointer;
+}
+.search_plus {
+	background-image:url(../images/bt_search_plus.png);
+}
+.search_minus {
+	background-image:url(../images/bt_search_minus.png);
+}
+.search_option {
+	display:none;
+	height:20px;
+}
+.search_options_main {
+	float:left;
+	height:20px;
+}
+.by_result_type_options {
+	display:block;
+	float:left;
+}
+
+.search_advanced {
+	display:none;
+}
+
+.search_date_start, .search_date_end {
+	display:none;
+}
+
+
 
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen 

@@ -80,7 +80,6 @@ class InformaFrontend(UnveillanceFrontend):
 				'/web/js/controllers/ic_source.js'
 			],
 			'main' : [
-				'/web/css/reset.css',
 				'/web/css/tabs.css',
 				'/web/js/lib/dropzone.js',
 				'/web/js/models/ic_search.js',

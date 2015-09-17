@@ -1,3 +1,7 @@
+body {
+	color:#FFF !important;
+}
+
 @font-face {
 	font-family: 'lato-hairline';
 	src: url('fonts/lato-hairline-webfont.eot');
@@ -149,14 +153,6 @@ ul {
 	margin:2em 0;
 }
 
-#ic_search_holder {
-	width:99%;
-	min-height:5em;
-	margin:0.5em;
-	padding:10px;
-	border:1px solid #000;
-}
-
 .ic_j3m_info_viz {
 	height: 14em;
 	width: 100%;
@@ -169,7 +165,6 @@ ul {
 }
 
 .ic_button, .uv_button, .ic_file_name {
-	border:1px solid #ccc;
 	padding:0.2em;
 	margin:0.1em;
 	font-size:14px;
