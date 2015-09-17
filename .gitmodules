@@ -1,3 +1,3 @@
 [submodule "lib/Frontend"]
 	path = lib/Frontend
-	url = https://github.com/unveillance/UnveillanceInterface.git
+	url = git@github.com:unveillance/UnveillanceInterface.git

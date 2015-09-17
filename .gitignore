@@ -5,10 +5,9 @@
 .venv/
 .users/
 .gpg/
+.ssh/
 
-conf/*.config.yaml
-conf/informacam.*
-conf/*.secrets.json
+conf/
 
 test.*
 lib/Frontend
