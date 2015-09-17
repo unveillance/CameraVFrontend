@@ -124,7 +124,6 @@ $('.search_options_main select').change(function() {
 
 $('.by_date_created_options select').change(function() {
 	option = $(this).val();
-	$c(option);
 	if (option == 'date_created_on') {
 		$('.search_date_start, .search_date_end').hide();
 		$('.search_date').show();
@@ -134,7 +133,7 @@ $('.by_date_created_options select').change(function() {
 	}
 });
 
-$('.search_advanced .search_plus, .search_advanced .search_plus').click(function(){
+$('.search_advanced .search_plus, .search_advanced .search_minus').click(function(){
 	alert('This doesn\'t do anything yet, but it will allow the user to add or remove a set of search criteria.');
 });
 

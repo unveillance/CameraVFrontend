@@ -13,7 +13,8 @@ div.tab_content {
 	top:47px;
 	left:15px;
 	right:15px;
-	bottom:0;
+	bottom:15px;
+	background:#444;
 }
 
 /* the jq tabs */
@@ -78,9 +79,6 @@ div.tab_content {
 	font-size:.9em;
 }
 
-#metadata div.tab_content {
-}
-
 #tabs ul.controls a:hover {
   background: #EEE;
 }
@@ -133,11 +131,6 @@ and (max-device-width : 480px) {
 	
 	#ic_url_instructions_smartphone {
 		display:block;
-	}
-	
-	div.tab_content {
-		height:100%;
-		width:100%;
 	}
 	
 	#tabs {

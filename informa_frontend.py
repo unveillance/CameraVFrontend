@@ -37,7 +37,6 @@ class InformaFrontend(UnveillanceFrontend):
 		
 		self.default_on_loads.extend([
 			'/web/js/lib/md5.js',
-			'/web/js/lib/sammy.js',
 			'/web/js/lib/crossfilter.min.js',
 			'/web/js/lib/d3.min.js',
 			'/web/js/lib/visualsearch.js',

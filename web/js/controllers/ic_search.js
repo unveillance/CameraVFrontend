@@ -21,7 +21,7 @@ function loadSearchResult(search_result) {
 
 var Search = {
 	onConfLoaded: function() {
-		$("#search_content").append(getTemplate("search.html", null, "/web/layout/views/module/"));
+//		$("#search_content").append(getTemplate("search.html", null, "/web/layout/views/module/"));
 	
 		window.setTimeout(function() {
 			search = new InformaCamSearch({

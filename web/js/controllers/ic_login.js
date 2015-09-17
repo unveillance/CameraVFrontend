@@ -4,6 +4,7 @@ function init() {
 	current_user = new UnveillanceUser();
 }
 
+/*
 (function($) {
 	var login_sammy = $.sammy("#header", function() {
 		this.get("#login", function() {
@@ -21,3 +22,4 @@ function init() {
 				.html('<a href="#login">Log in</a>'));
 	});
 })(jQuery);
+*/
