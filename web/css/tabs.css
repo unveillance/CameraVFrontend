@@ -95,10 +95,8 @@ div.tab_content {
 	cursor:default;
 }
 
-#tabs ul.inline li#search_tab {
-	position:absolute;
-	right:15px;
-	margin:0;
+#tabs ul.inline li.right {
+	float:right;
 }
 
 .tab_content input, button, select, textarea, span {
