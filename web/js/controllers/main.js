@@ -29,6 +29,14 @@ var Main = {
 
 /* modified from Svet's ic_landing.js */
 jQuery(document).ready(function($) {
+
+	var h = window.location.hash.substring(1);
+	if (h == 'documents' || h == 'file' || h == 'search') {
+		$('ul.controls li').removeClass('active');
+		$('ul.controls li#' + h + '_tab').addClass('active');
+		$('#tabs .block').removeClass('active');
+		$('#tabs #' + h + '_holder').addClass('active');
+	}
 	$( '#tabs' ).find( '.controls' ).find( 'a' ).click( function( e ){
 		
 //		e.preventDefault();
@@ -38,11 +46,11 @@ jQuery(document).ready(function($) {
 		if (el.parent( 'li' ).hasClass('disabled')) {
 			return;
 		}
-	
+		
 		el.parents( 'ul' ).find( 'li' ).removeClass( 'active' );
 		el.parent( 'li' ).addClass( 'active' );
 		el.parents('ul').siblings('div.active').removeClass( 'active' );
-		$( '#tabs' ).find( el.attr( 'href' ) ).addClass( 'active' );
+		$( '#tabs' ).find( el.attr( 'href' )  + '_holder' ).addClass( 'active' );
 
 		$('#ic_search_button')
 			.before($($("input[name='_xsrf']")[0]).clone());
