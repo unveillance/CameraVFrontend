@@ -45,4 +45,33 @@ var Search = {
 
 		}, 100);
 	},
+	
+	appendAdvancedSearch: function(button) {
+		var search = $(getTemplate("search_advanced.html"));
+		$('<span/>', {
+			class: 'search_plus search_button',
+			click: function() {
+				Search.appendAdvancedSearch($(this));
+			}}).appendTo(search);
+
+		$('<span/>', {
+			class: 'search_minus search_button',
+			click: function() {
+				Search.removeAdvancedSearch($(this));
+			}}).appendTo(search);
+		search.find('.search_options_main select').change(function() {
+			search_section = $(this).parent().parent();
+			option = $(this).val();
+			search_section.find('.search_option').hide();
+			search_section.find('.' + option + '_options').show();
+		});
+			
+
+
+		button.parent().after(search);
+	},
+	
+	removeAdvancedSearch: function(button) {
+		button.parent().remove();
+	},
 };

@@ -121,10 +121,6 @@ jQuery(document).ready(function($) {
 		
 		
 //Jonny revised search mockup 09/2015
-$('#advanced').click(function() {
-	$('.search_advanced').show();
-});
-
 $('.search_options_main select').change(function() {
 	option = $(this).val();
 	$c(option);
@@ -143,8 +139,8 @@ $('.by_date_created_options select').change(function() {
 	}
 });
 
-$('.search_advanced .search_plus, .search_advanced .search_minus').click(function(){
-	alert('This doesn\'t do anything yet, but it will allow the user to add or remove a set of search criteria.');
+$('.search_plus').click(function(){
+	Search.appendAdvancedSearch($(this));
 });
 
 });

@@ -239,9 +239,14 @@ and (max-device-width : 480px) {
 	width:20px;
 	height:20px;
 	position:relative;
-	top:5px;
+	top:13px;
 	cursor:pointer;
 }
+
+.search_advanced .search_button {
+	top: 0;
+}
+
 .search_plus {
 	background-image:url(../images/bt_search_plus.png);
 }
@@ -259,10 +264,6 @@ and (max-device-width : 480px) {
 .by_result_type_options {
 	display:block;
 	float:left;
-}
-
-.search_advanced {
-	display:none;
 }
 
 .search_date_start, .search_date_end {
