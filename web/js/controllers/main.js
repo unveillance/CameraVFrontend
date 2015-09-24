@@ -7,7 +7,7 @@ function failOut() {
 var Main = {
 	onConfLoaded: function() {
 		try {
-		/*
+/*
 			documents = new InformaCamDocumentBrowser(_.extend(
 				doInnerAjax("documents", "post", 
 					{ mime_type : "[" + UV.DEFAULT_MIME_TYPES.join() + "]", doc_type : "uv_document" }, null, false),
@@ -19,7 +19,7 @@ var Main = {
 			}
 
 			documents.unset('result');
-			*/
+*/
 		} catch(err) {
 			console.error(err);
 			failOut();
