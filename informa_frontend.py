@@ -12,7 +12,7 @@ from conf import INFORMA_BASE_DIR, INFORMA_CONF_ROOT, DEBUG, WEB_TITLE, buildSer
 class InformaFrontend(UnveillanceFrontend):
 	def __init__(self):
 		UnveillanceFrontend.__init__(self)
-				
+
 		self.reserved_routes.extend(["ictd", "commit", "leaflet", "submissions", "v2j3mview"])
 		self.routes.extend([
 			(r"/ictd/", self.ICTDHandler),
@@ -98,7 +98,7 @@ class InformaFrontend(UnveillanceFrontend):
 				'/web/js/models/ic_j3m.js',
 				'/web/js/ic_tsv_export.js',
 				'/web/js/controllers/ic_search.js',
-				'/web/js/controllers/main.js',
+				'/web/js/controllers/main.js'
 			],				
 			'search' :[
 				'/web/js/models/ic_search.js',
