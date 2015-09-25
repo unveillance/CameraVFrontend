@@ -1,10 +1,10 @@
 <div id="tabs">
             
     <ul class="controls inline clearfix">
-        <li class="active"><a href="#file">File</a></li>
-        <li class="disabled"><a href="#notes">Notes</a></li>
-        <li class="disabled"><a href="#export">Export</a></li>
-        <li class="disabled"><a href="#metadata">Metadata</a></li>
+        <li id="file_tab" class="active"><a href="#file">File</a></li>
+        <li id="notes_tab" class="disabled"><a href="#notes">Notes</a></li>
+        <li id="export_tab" class="disabled"><a href="#export">Export</a></li>
+        <li id="metadata_tab" class="disabled"><a href="#metadata">Metadata</a></li>
         <li id="search_tab" class="right"><a href="#search">Search</a></li>
         <li id="documents_tab" class="right"><a href="#documents">Documents</a></li>
     </ul>
@@ -41,9 +41,9 @@
     <div id="metadata_holder" class="block clearfix">
         <div class="tab_content">
 			<ul class="controls inline clearfix">
-				<li class="active"><a href="#meta_header">Header</a></li>
-				<li><a href="#meta_wrapper">Document Wrapper</a></li>
-				<li><a href="#meta_sensors">Device Sensors</a></li>
+				<li id="meta_header_tab" class="active"><a href="#meta_header">Header</a></li>
+				<li id="meta_wrapper_tab"><a href="#meta_wrapper">Document Wrapper</a></li>
+				<li id="meta_sensors_tab"><a href="#meta_sensors">Device Sensors</a></li>
 			</ul>
 			
 			<div id="meta_header_holder" class="block active">

@@ -6,28 +6,7 @@ function failOut() {
 }
 
 var Main = {
-	onConfLoaded: function() {
-		try {
-			$c('main onconfloaded');
-/*
-			documents = new InformaCamDocumentBrowser(_.extend(
-				doInnerAjax("documents", "post", 
-					{ mime_type : "[" + UV.DEFAULT_MIME_TYPES.join() + "]", doc_type : "uv_document" }, null, false),
-				{ root_el : $("#ic_document_browser") }));
-
-			if(documents.get('result') != 200) {
-				failOut();
-				return;
-			}
-
-			documents.unset('result');
-*/
-		} catch(err) {
-			console.error(err);
-			failOut();
-		}
-	},
-	
+	docid: null, //used to keep track of when document changes
 	routePage: function(hash) {
 		var location = hash;
 		if (app.docid) {
@@ -35,43 +14,43 @@ var Main = {
 		}
 		window.location.hash = location;
 
-		switch (hash) {
-			case 'file':
-				if (app.docid !== undefined) {
+		if (app.docid !== undefined) {
+			switch (hash) {
+				case 'file':
 					this.initFileView();
-				}
-			break;
-			case 'notes':
-				this.initNotesView();
-			break;
-			case 'export':
-				this.initSearchView();
-			break;
-			case 'metadata':
-				this.initSearchView();
-			break;
-			case 'search':
-				this.initSearchView();
-			break;
-			case 'documents':
-				this.initSearchView();
-			break;
-			case 'meta_header':
-				this.initSearchView();
-			break;
-			case 'meta_wrapper':
-				this.initSearchView();
-			break;
-			case 'meta_sensors':
-				this.initSearchView();
-			break;
+				break;
+				case 'notes':
+					this.initNotesView();
+				break;
+				case 'export':
+					this.initExportView();
+				break;
+				case 'metadata':
+				case 'meta_header':
+				case 'meta_wrapper':
+				case 'meta_sensors':
+					this.initMetadataView();
+				break;
+				case 'search':
+					this.initSearchView();
+				break;
+				case 'documents':
+					this.initDocumentsView();
+				break;
+			}
+			this.docid = app.docid;
 		}
 	},
 	
 	initFileView: function() {
-		var fileView = new app.CameraVFileView;
+		if (app.docid == this.docid) { //don't render it twice
+			return;
+		}
+		fileView = new app.CameraVFileView;
 		$c('initFileView ' + app.docid);
 		$c(fileView);
+		
+		//fetch all models automatically?
 		for (thing in fileView) {
 			if (fileView[thing] instanceof Backbone.View) {
 //				fileView[thing].model.fetch();
@@ -83,19 +62,46 @@ var Main = {
 		fileView.J3MHeaderView.model.fetch();
 		fileView.documentWrapperView.model.fetch();
 		fileView.appendedUserDataView.model.fetch();
-
-		
-//		$c(fileView.timeseriesMapView.model);
-//		fileView.documentWrapperView.model.set('jimmyHat', true);
+	},
+	
+	initNotesView: function() {
+		notesView = new app.CameraVNotesView;
+	},
+	
+	initExportView: function() {
+		exportView = new app.CameraVExportView;
+	},
+	
+	initMetadataView: function() {
+		exportView = new app.CameraVMetadataView;
 	},
 	
 	initSearchView: function() {
+		exportView = new app.CameraVSearchView;
 	},
 	
+	initDocumentsView: function() {
+		exportView = new app.CameraVDocumentsView;
+	},
 };
 
 /* modified from Svet's ic_landing.js */
 jQuery(document).ready(function($) {
+
+	try {
+		updateConf();
+	} catch(err) {
+		console.warn(err);
+		console.warn("no updateConf()");
+	}
+	
+	try {
+		Search.onConfLoaded();
+	} catch(err) {
+		console.warn(err);
+		console.warn("no onConfLoaded()");
+	}
+		
 
 	var vars = _.object(_.compact(_.map(location.hash.slice(1).split('&'), function(item) {  if (item) return item.split('='); })));
 	
@@ -104,12 +110,19 @@ jQuery(document).ready(function($) {
 	}
 //http://localhost:8888/#file&_id=7a200f88018146bdeef9d3775f7685a7710ea7a4
 
-	var h = window.location.hash.substring(1);
-	if (h == 'documents' || h == 'file' || h == 'search') {
+	var h = window.location.hash.substring(1).split('&')[0];
+	if (h == 'documents' || h == 'file' || h == 'search' || app.docid) {
+		if (app.docid) {
+			$('#tabs .controls li').removeClass('disabled');
+		}
 		$('ul.controls li').removeClass('active');
 		$('ul.controls li#' + h + '_tab').addClass('active');
 		$('#tabs .block').removeClass('active');
 		$('#tabs #' + h + '_holder').addClass('active');
+		if (h.substring(0,4) == 'meta') {//pretty hacky
+			$('ul.controls li#metadata_tab').addClass('active');
+			$('#tabs #metadata_holder').addClass('active');
+		}
 		Main.routePage(h);
 	} else if (app.docid) {//don't go to other pages unless there's a docid
 		Main.routePage(h);
@@ -117,16 +130,15 @@ jQuery(document).ready(function($) {
 		Main.routePage('file');
 	}
 	
+	
 	$('#tabs').find('.controls').find('a').click( function( e ){
 		var el = $(this);
 		var href = el.attr('href');
-		$c(el.attr('href'));
 		
 		e.preventDefault();
 		if (el.parent('li').hasClass('disabled') || el.parent('li').hasClass('active')) {
 			return;
 		}
-		
 		
 		el.parents('ul').find('li').removeClass('active');
 		el.parent('li').addClass('active');
@@ -190,45 +202,29 @@ jQuery(document).ready(function($) {
 		});
 
 
-		try {
-			updateConf();
-		} catch(err) {
-			console.warn(err);
-			console.warn("no updateConf()");
-		}
 		
-			Search.onConfLoaded();
-		try {
-			Main.onConfLoaded();
-			Search.onConfLoaded();
-		} catch(err) {
-			console.warn(err);
-			console.warn("no onConfLoaded()");
-		}
-		
-		
-//Jonny revised search mockup 09/2015
-$('.search_options_main select').change(function() {
-	option = $(this).val();
-	$c(option);
-	$('.search_option').hide();
-	$('.' + option + '_options').show();
-});
+	//Jonny revised search mockup 09/2015
+	$('.search_options_main select').change(function() {
+		option = $(this).val();
+		$c(option);
+		$('.search_option').hide();
+		$('.' + option + '_options').show();
+	});
 
-$('.by_date_created_options select').change(function() {
-	option = $(this).val();
-	if (option == 'date_created_on') {
-		$('.search_date_start, .search_date_end').hide();
-		$('.search_date').show();
-	} else {
-		$('.search_date_start, .search_date_end').show();
-		$('.search_date').hide();
-	}
-});
+	$('.by_date_created_options select').change(function() {
+		option = $(this).val();
+		if (option == 'date_created_on') {
+			$('.search_date_start, .search_date_end').hide();
+			$('.search_date').show();
+		} else {
+			$('.search_date_start, .search_date_end').show();
+			$('.search_date').hide();
+		}
+	});
 
-$('.search_plus').click(function(){
-	Search.appendAdvancedSearch($(this));
-});
+	$('.search_plus').click(function(){
+		Search.appendAdvancedSearch($(this));
+	});
 
 });
 

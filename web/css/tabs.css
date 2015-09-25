@@ -67,15 +67,15 @@ div.tab_content {
   letter-spacing:1px;
 }
 
-#metadata ul {
+#metadata_holder ul {
   	margin:8px 0 0 0;
 }
 
-#metadata ul.inline li {
+#metadata_holder ul.inline li {
 	width:190px;
 }
 
-#metadata ul.controls a {
+#metadata_holder ul.controls a {
 	font-size:.9em;
 }
 
