@@ -1,3 +1,4 @@
+var app = app || {};//global Backbone
 var documents, search;
 
 function failOut() {
@@ -7,6 +8,7 @@ function failOut() {
 var Main = {
 	onConfLoaded: function() {
 		try {
+			$c('main onconfloaded');
 /*
 			documents = new InformaCamDocumentBrowser(_.extend(
 				doInnerAjax("documents", "post", 
@@ -25,10 +27,82 @@ var Main = {
 			failOut();
 		}
 	},
+	
+	routePage: function(hash) {
+		var location = hash;
+		if (app.docid) {
+			location += '&_id=' + app.docid;
+		}
+		window.location.hash = location;
+
+		switch (hash) {
+			case 'file':
+				if (app.docid !== undefined) {
+					this.initFileView();
+				}
+			break;
+			case 'notes':
+				this.initNotesView();
+			break;
+			case 'export':
+				this.initSearchView();
+			break;
+			case 'metadata':
+				this.initSearchView();
+			break;
+			case 'search':
+				this.initSearchView();
+			break;
+			case 'documents':
+				this.initSearchView();
+			break;
+			case 'meta_header':
+				this.initSearchView();
+			break;
+			case 'meta_wrapper':
+				this.initSearchView();
+			break;
+			case 'meta_sensors':
+				this.initSearchView();
+			break;
+		}
+	},
+	
+	initFileView: function() {
+		var fileView = new app.CameraVFileView;
+		$c('initFileView ' + app.docid);
+		$c(fileView);
+		for (thing in fileView) {
+			if (fileView[thing] instanceof Backbone.View) {
+//				fileView[thing].model.fetch();
+//				$c(fileView[thing]);
+			}
+		}
+
+		fileView.timeseriesMapView.model.fetch();
+		fileView.J3MHeaderView.model.fetch();
+		fileView.documentWrapperView.model.fetch();
+		fileView.appendedUserDataView.model.fetch();
+
+		
+//		$c(fileView.timeseriesMapView.model);
+//		fileView.documentWrapperView.model.set('jimmyHat', true);
+	},
+	
+	initSearchView: function() {
+	},
+	
 };
 
 /* modified from Svet's ic_landing.js */
 jQuery(document).ready(function($) {
+
+	var vars = _.object(_.compact(_.map(location.hash.slice(1).split('&'), function(item) {  if (item) return item.split('='); })));
+	
+	if (vars._id !== undefined) {
+		app.docid = vars._id;
+	}
+//http://localhost:8888/#file&_id=7a200f88018146bdeef9d3775f7685a7710ea7a4
 
 	var h = window.location.hash.substring(1);
 	if (h == 'documents' || h == 'file' || h == 'search') {
@@ -36,24 +110,34 @@ jQuery(document).ready(function($) {
 		$('ul.controls li#' + h + '_tab').addClass('active');
 		$('#tabs .block').removeClass('active');
 		$('#tabs #' + h + '_holder').addClass('active');
+		Main.routePage(h);
+	} else if (app.docid) {//don't go to other pages unless there's a docid
+		Main.routePage(h);
+	} else {
+		Main.routePage('file');
 	}
-	$( '#tabs' ).find( '.controls' ).find( 'a' ).click( function( e ){
-		
-//		e.preventDefault();
 	
-		var el = $( this );
+	$('#tabs').find('.controls').find('a').click( function( e ){
+		var el = $(this);
+		var href = el.attr('href');
+		$c(el.attr('href'));
 		
-		if (el.parent( 'li' ).hasClass('disabled')) {
+		e.preventDefault();
+		if (el.parent('li').hasClass('disabled') || el.parent('li').hasClass('active')) {
 			return;
 		}
 		
-		el.parents( 'ul' ).find( 'li' ).removeClass( 'active' );
-		el.parent( 'li' ).addClass( 'active' );
-		el.parents('ul').siblings('div.active').removeClass( 'active' );
-		$( '#tabs' ).find( el.attr( 'href' )  + '_holder' ).addClass( 'active' );
+		
+		el.parents('ul').find('li').removeClass('active');
+		el.parent('li').addClass('active');
+		el.parents('ul').siblings('div.active').removeClass('active');
+		$('#tabs').find(href + '_holder').addClass('active');
+		$c(app.docid);
+		
+		Main.routePage(href.substring(1));
+		
 
-		$('#ic_search_button')
-			.before($($("input[name='_xsrf']")[0]).clone());
+//		$('#ic_search_button').before($($("input[name='_xsrf']")[0]).clone());
 	
 	} );
 	
@@ -80,13 +164,15 @@ jQuery(document).ready(function($) {
 			});
 		});
 	
-	
 	discoverICDropzones({url : "/import/"}, "#ic_import_dropzone_holder",
 		function(file, message) {
 			// onSuccess
 			console.log(message);
-			path = message.data.mime_type !== undefined && message.data.mime_type.indexOf("application/pgp") > -1 ? "/source/" : "/submission/";
-			location.href = path + message.data._id + '/';
+			$('#tabs .controls li').removeClass('disabled');
+			app.docid = message.data._id;
+			window.location.hash = 'file&_id=' + app.docid;
+			this.disable();
+			Main.initFileView();
 		},
 		function(file, message) {
 			// onError
@@ -111,6 +197,7 @@ jQuery(document).ready(function($) {
 			console.warn("no updateConf()");
 		}
 		
+			Search.onConfLoaded();
 		try {
 			Main.onConfLoaded();
 			Search.onConfLoaded();
