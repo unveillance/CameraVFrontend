@@ -1,5 +1,5 @@
 var app = app || {};//global Backbone
-var documents, search;
+var documents, search, dropzones;
 
 function failOut() {
 	$("#ic_content_header").html("Sorry.  No documents found.");
@@ -43,7 +43,17 @@ var Main = {
 	},
 	
 	initFileView: function() {
+		if (this.docid == null) { //init search
+			$('#clear_and_upload').hide();
+			$('#ic_import_dropzone_holder').show();
+			$c('this.docid == null');
+		}
+
+		$('#clear_and_upload').show();
+		$('#ic_import_dropzone_holder').hide();
+
 		if (app.docid == this.docid) { //don't render it twice
+			$c('app.docid == this.docid');
 			return;
 		}
 		fileView = new app.CameraVFileView;
@@ -62,17 +72,27 @@ var Main = {
 		fileView.J3MHeaderView.model.fetch();
 		fileView.documentWrapperView.model.fetch();
 		fileView.appendedUserDataView.model.fetch();
+		
 	},
 	
 	initNotesView: function() {
+		if (app.docid == this.docid) { //don't render it twice
+			return;
+		}
 		notesView = new app.CameraVNotesView;
 	},
 	
 	initExportView: function() {
+		if (app.docid == this.docid) { //don't render it twice
+			return;
+		}
 		exportView = new app.CameraVExportView;
 	},
 	
 	initMetadataView: function() {
+		if (app.docid == this.docid) { //don't render it twice
+			return;
+		}
 		exportView = new app.CameraVMetadataView;
 	},
 	
@@ -83,9 +103,14 @@ var Main = {
 	initDocumentsView: function() {
 		exportView = new app.CameraVDocumentsView;
 	},
+	
+	resetDropzone: function() {
+		dropzones[0].dropzone.removeAllFiles();	
+		$('#clear_and_upload').hide();
+		$('#ic_import_dropzone_holder, .ic_upload_instructions').show();
+	},
 };
 
-/* modified from Svet's ic_landing.js */
 jQuery(document).ready(function($) {
 
 	try {
@@ -175,15 +200,14 @@ jQuery(document).ready(function($) {
 			
 			});
 		});
-	
-	discoverICDropzones({url : "/import/"}, "#ic_import_dropzone_holder",
+
+	dropzones = discoverICDropzones({url : "/import/"}, "#ic_import_dropzone_holder",
 		function(file, message) {
 			// onSuccess
 			console.log(message);
 			$('#tabs .controls li').removeClass('disabled');
 			app.docid = message.data._id;
 			window.location.hash = 'file&_id=' + app.docid;
-			this.disable();
 			Main.initFileView();
 		},
 		function(file, message) {
@@ -194,12 +218,19 @@ jQuery(document).ready(function($) {
 				if (message.result == 403) {
 					messagetext = "It's not you, it's us. We're looking into the problem. Please try again later. (" + message.result + ")";
 					this.disable();
+					this.removeAllFiles();
 				}
 			} else {
 				messagetext = message;
 			}
 			return file.previewElement.querySelector("[data-dz-errormessage]").textContent = messagetext;
 		});
+		
+	$('#clear_and_upload').click(function() {
+		Main.resetDropzone();
+	});
+	
+
 
 
 		

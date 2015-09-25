@@ -41,6 +41,8 @@ function discoverICDropzones(dz_profile, el, onSuccess, onError, onFileAdded) {
       		dropzones.push(new InformacamDropzone(dropzone_id, dz_profile_, 
 			onSuccess, onError, onFileAdded));
 	});
+	
+	return dropzones;
 }
 
 var InformacamDropzone = UnveillanceDropzone.extend({

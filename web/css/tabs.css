@@ -54,7 +54,7 @@ div.tab_content {
   width: 45.96429%;
 }
 
-#tabs ul.controls a, .tab_content a.uv_button {
+#tabs ul.controls a, .tab_content a.uv_button, .cv_button {
   padding: 0.63333em;
   display: block;
   background: #777;
@@ -65,6 +65,18 @@ div.tab_content {
   text-decoration: none;
   text-transform:uppercase;
   letter-spacing:1px;
+}
+
+.cv_button {
+	width: 120px;
+	cursor:pointer;
+}
+
+#clear_and_upload {
+	position:absolute;
+	top:20px;
+	right:20px;
+	display:none;
 }
 
 #metadata_holder ul {
