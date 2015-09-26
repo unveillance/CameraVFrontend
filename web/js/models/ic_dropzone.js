@@ -25,8 +25,6 @@ function discoverICDropzones(dz_profile, el, onSuccess, onError, onFileAdded) {
 			console.error('dz_profile_.error');
 			console.error(message);
 			console.error(message.data);
-//let's pretend this is success for now
-			$('#tabs .controls li').removeClass('disabled');
 //			location.href = '/submission/' + message.data._id + '/';
 			messagetext = '';
 			if (typeof message !== null && typeof message === 'object') {
@@ -43,6 +41,8 @@ function discoverICDropzones(dz_profile, el, onSuccess, onError, onFileAdded) {
       		dropzones.push(new InformacamDropzone(dropzone_id, dz_profile_, 
 			onSuccess, onError, onFileAdded));
 	});
+	
+	return dropzones;
 }
 
 var InformacamDropzone = UnveillanceDropzone.extend({

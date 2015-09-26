@@ -54,7 +54,7 @@ div.tab_content {
   width: 45.96429%;
 }
 
-#tabs ul.controls a, .tab_content a.uv_button {
+#tabs ul.controls a, .tab_content a.uv_button, .cv_button {
   padding: 0.63333em;
   display: block;
   background: #777;
@@ -67,15 +67,27 @@ div.tab_content {
   letter-spacing:1px;
 }
 
-#metadata ul {
+.cv_button {
+	width: 120px;
+	cursor:pointer;
+}
+
+#clear_and_upload {
+	position:absolute;
+	top:20px;
+	right:20px;
+	display:none;
+}
+
+#metadata_holder ul {
   	margin:8px 0 0 0;
 }
 
-#metadata ul.inline li {
+#metadata_holder ul.inline li {
 	width:190px;
 }
 
-#metadata ul.controls a {
+#metadata_holder ul.controls a {
 	font-size:.9em;
 }
 

@@ -1,59 +1,180 @@
-var documents, search;
+var app = app || {};//global Backbone
+var documents, search, dropzones;
 
 function failOut() {
 	$("#ic_content_header").html("Sorry.  No documents found.");
 }
 
 var Main = {
-	onConfLoaded: function() {
-		try {
-		/*
-			documents = new InformaCamDocumentBrowser(_.extend(
-				doInnerAjax("documents", "post", 
-					{ mime_type : "[" + UV.DEFAULT_MIME_TYPES.join() + "]", doc_type : "uv_document" }, null, false),
-				{ root_el : $("#ic_document_browser") }));
-
-			if(documents.get('result') != 200) {
-				failOut();
-				return;
-			}
-
-			documents.unset('result');
-			*/
-		} catch(err) {
-			console.error(err);
-			failOut();
+	docid: null, //used to keep track of when document changes
+	routePage: function(hash) {
+		var location = hash;
+		if (app.docid) {
+			location += '&_id=' + app.docid;
 		}
+		window.location.hash = location;
+
+		if (app.docid !== undefined) {
+			switch (hash) {
+				case 'file':
+					this.initFileView();
+				break;
+				case 'notes':
+					this.initNotesView();
+				break;
+				case 'export':
+					this.initExportView();
+				break;
+				case 'metadata':
+				case 'meta_header':
+				case 'meta_wrapper':
+				case 'meta_sensors':
+					this.initMetadataView();
+				break;
+				case 'search':
+					this.initSearchView();
+				break;
+				case 'documents':
+					this.initDocumentsView();
+				break;
+			}
+			this.docid = app.docid;
+		}
+	},
+	
+	initFileView: function() {
+		if (this.docid == null) { //init search
+			$('#clear_and_upload').hide();
+			$('#ic_import_dropzone_holder').show();
+			$c('this.docid == null');
+		}
+
+		$('#clear_and_upload').show();
+		$('#ic_import_dropzone_holder').hide();
+
+		if (app.docid == this.docid) { //don't render it twice
+			$c('app.docid == this.docid');
+			return;
+		}
+		fileView = new app.CameraVFileView;
+		$c('initFileView ' + app.docid);
+		$c(fileView);
+		
+		//fetch all models automatically?
+		for (thing in fileView) {
+			if (fileView[thing] instanceof Backbone.View) {
+//				fileView[thing].model.fetch();
+//				$c(fileView[thing]);
+			}
+		}
+
+		fileView.timeseriesMapView.model.fetch();
+		fileView.J3MHeaderView.model.fetch();
+		fileView.documentWrapperView.model.fetch();
+		fileView.appendedUserDataView.model.fetch();
+		
+	},
+	
+	initNotesView: function() {
+		if (app.docid == this.docid) { //don't render it twice
+			return;
+		}
+		notesView = new app.CameraVNotesView;
+	},
+	
+	initExportView: function() {
+		if (app.docid == this.docid) { //don't render it twice
+			return;
+		}
+		exportView = new app.CameraVExportView;
+	},
+	
+	initMetadataView: function() {
+		if (app.docid == this.docid) { //don't render it twice
+			return;
+		}
+		exportView = new app.CameraVMetadataView;
+	},
+	
+	initSearchView: function() {
+		exportView = new app.CameraVSearchView;
+	},
+	
+	initDocumentsView: function() {
+		exportView = new app.CameraVDocumentsView;
+	},
+	
+	resetDropzone: function() {
+		dropzones[0].dropzone.removeAllFiles();	
+		$('#clear_and_upload').hide();
+		$('#ic_import_dropzone_holder, .ic_upload_instructions').show();
 	},
 };
 
-/* modified from Svet's ic_landing.js */
 jQuery(document).ready(function($) {
 
-	var h = window.location.hash.substring(1);
-	if (h == 'documents' || h == 'file' || h == 'search') {
+	try {
+		updateConf();
+	} catch(err) {
+		console.warn(err);
+		console.warn("no updateConf()");
+	}
+	
+	try {
+		Search.onConfLoaded();
+	} catch(err) {
+		console.warn(err);
+		console.warn("no onConfLoaded()");
+	}
+		
+
+	var vars = _.object(_.compact(_.map(location.hash.slice(1).split('&'), function(item) {  if (item) return item.split('='); })));
+	
+	if (vars._id !== undefined) {
+		app.docid = vars._id;
+	}
+//http://localhost:8888/#file&_id=7a200f88018146bdeef9d3775f7685a7710ea7a4
+
+	var h = window.location.hash.substring(1).split('&')[0];
+	if (h == 'documents' || h == 'file' || h == 'search' || app.docid) {
+		if (app.docid) {
+			$('#tabs .controls li').removeClass('disabled');
+		}
 		$('ul.controls li').removeClass('active');
 		$('ul.controls li#' + h + '_tab').addClass('active');
 		$('#tabs .block').removeClass('active');
 		$('#tabs #' + h + '_holder').addClass('active');
+		if (h.substring(0,4) == 'meta') {//pretty hacky
+			$('ul.controls li#metadata_tab').addClass('active');
+			$('#tabs #metadata_holder').addClass('active');
+		}
+		Main.routePage(h);
+	} else if (app.docid) {//don't go to other pages unless there's a docid
+		Main.routePage(h);
+	} else {
+		Main.routePage('file');
 	}
-	$( '#tabs' ).find( '.controls' ).find( 'a' ).click( function( e ){
-		
-//		e.preventDefault();
 	
-		var el = $( this );
+	
+	$('#tabs').find('.controls').find('a').click( function( e ){
+		var el = $(this);
+		var href = el.attr('href');
 		
-		if (el.parent( 'li' ).hasClass('disabled')) {
+		e.preventDefault();
+		if (el.parent('li').hasClass('disabled') || el.parent('li').hasClass('active')) {
 			return;
 		}
 		
-		el.parents( 'ul' ).find( 'li' ).removeClass( 'active' );
-		el.parent( 'li' ).addClass( 'active' );
-		el.parents('ul').siblings('div.active').removeClass( 'active' );
-		$( '#tabs' ).find( el.attr( 'href' )  + '_holder' ).addClass( 'active' );
+		el.parents('ul').find('li').removeClass('active');
+		el.parent('li').addClass('active');
+		el.parents('ul').siblings('div.active').removeClass('active');
+		$('#tabs').find(href + '_holder').addClass('active');
+		$c(app.docid);
+		
+		Main.routePage(href.substring(1));
+		
 
-		$('#ic_search_button')
-			.before($($("input[name='_xsrf']")[0]).clone());
+//		$('#ic_search_button').before($($("input[name='_xsrf']")[0]).clone());
 	
 	} );
 	
@@ -79,14 +200,15 @@ jQuery(document).ready(function($) {
 			
 			});
 		});
-	
-	
-	discoverICDropzones({url : "/import/"}, "#ic_import_dropzone_holder",
+
+	dropzones = discoverICDropzones({url : "/import/"}, "#ic_import_dropzone_holder",
 		function(file, message) {
 			// onSuccess
 			console.log(message);
-			path = message.data.mime_type !== undefined && message.data.mime_type.indexOf("application/pgp") > -1 ? "/source/" : "/submission/";
-			location.href = path + message.data._id + '/';
+			$('#tabs .controls li').removeClass('disabled');
+			app.docid = message.data._id;
+			window.location.hash = 'file&_id=' + app.docid;
+			Main.initFileView();
 		},
 		function(file, message) {
 			// onError
@@ -96,52 +218,44 @@ jQuery(document).ready(function($) {
 				if (message.result == 403) {
 					messagetext = "It's not you, it's us. We're looking into the problem. Please try again later. (" + message.result + ")";
 					this.disable();
+					this.removeAllFiles();
 				}
 			} else {
 				messagetext = message;
 			}
 			return file.previewElement.querySelector("[data-dz-errormessage]").textContent = messagetext;
 		});
+		
+	$('#clear_and_upload').click(function() {
+		Main.resetDropzone();
+	});
+	
 
 
-		try {
-			updateConf();
-		} catch(err) {
-			console.warn(err);
-			console.warn("no updateConf()");
+
+		
+	//Jonny revised search mockup 09/2015
+	$('.search_options_main select').change(function() {
+		option = $(this).val();
+		$c(option);
+		$('.search_option').hide();
+		$('.' + option + '_options').show();
+	});
+
+	$('.by_date_created_options select').change(function() {
+		option = $(this).val();
+		if (option == 'date_created_on') {
+			$('.search_date_start, .search_date_end').hide();
+			$('.search_date').show();
+		} else {
+			$('.search_date_start, .search_date_end').show();
+			$('.search_date').hide();
 		}
-		
-		try {
-			Main.onConfLoaded();
-			Search.onConfLoaded();
-		} catch(err) {
-			console.warn(err);
-			console.warn("no onConfLoaded()");
-		}
-		
-		
-//Jonny revised search mockup 09/2015
-$('.search_options_main select').change(function() {
-	option = $(this).val();
-	$c(option);
-	$('.search_option').hide();
-	$('.' + option + '_options').show();
-});
+	});
 
-$('.by_date_created_options select').change(function() {
-	option = $(this).val();
-	if (option == 'date_created_on') {
-		$('.search_date_start, .search_date_end').hide();
-		$('.search_date').show();
-	} else {
-		$('.search_date_start, .search_date_end').show();
-		$('.search_date').hide();
-	}
-});
-
-$('.search_plus').click(function(){
-	Search.appendAdvancedSearch($(this));
-});
+	$('.search_plus').click(function(){
+		Search.appendAdvancedSearch($(this));
+	});
 
 });
 
