@@ -37,7 +37,7 @@ var InformaCamSearch = Backbone.Model.extend({
 		$("#ic_av_search_type").change(_.bind(this.setSearchType, this, $("#ic_av_search_type")));
 	},
 	buildAndPerform: function() {
-		window.location = "/search/?" + this.build()[1];
+		Search.loadSearchResult(this.perform("?" + this.build()[1]));
 	},
 	perform: function(query) {		
 		if(_.isString(query)) {

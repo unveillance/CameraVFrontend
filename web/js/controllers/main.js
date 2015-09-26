@@ -194,7 +194,7 @@ jQuery(document).ready(function($) {
 		Main.routePage(href.substring(1));
 		
 
-//		$('#ic_search_button').before($($("input[name='_xsrf']")[0]).clone());
+		$('#ic_search_button').before($($("input[name='_xsrf']")[0]).clone());
 	
 	} );
 	

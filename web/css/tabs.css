@@ -232,11 +232,15 @@ and (max-device-width : 480px) {
 	max-width:900px;
 	min-width:650px;
 	margin:auto;
-	top:0;
-	bottom:0;
 	left:0;
 	right:0;
+	top:20px;
 	position:absolute;
+}
+
+#ic_advanced_search_link {
+	display:block;
+	margin-top:15px;
 }
 
 #ic_search_button {
@@ -245,6 +249,24 @@ and (max-device-width : 480px) {
 	right:0;
 	margin-top:25px;
 }
+
+#ic_search_results_holder {
+	margin-top:80px;
+}
+
+#ic_search_results_holder a {
+	color:#FFF;
+	text-decoration:none;
+}
+
+#ic_search_results_holder a:hover {
+	text-decoration:underline;
+}
+
+#ic_search_results_holder a:visited {
+	color:#DDD;
+}
+
 
 /* SEARCH MOCKUP 9/20015 JONNY */
 .search_button {

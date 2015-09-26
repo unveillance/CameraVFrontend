@@ -215,9 +215,6 @@ g .label {
 }
 
 
-
-
-
 @media print {
 	#ic_linechart_view_holder svg {
 		position:static;
