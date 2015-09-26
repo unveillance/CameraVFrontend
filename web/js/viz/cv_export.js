@@ -8,7 +8,7 @@ app.CameraVExportView = Backbone.View.extend({
 				urlRoot: '/GPSData',
 				id: app.docid
 			}),
-			el: '#cv_gps_coords_view_holder',
+			el: '#ic_gps_coords_view_holder',
 			header: 'GPS Coordinates',
 		});
 		

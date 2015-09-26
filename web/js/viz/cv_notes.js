@@ -15,6 +15,8 @@ app.CameraVNotesView = Backbone.View.extend({
 		this.listenTo(this.appendedUserDataView.model, 'change', function() {
 			$c('appendedUserDataView change');
 			$c(this);
+			$c(this.appendedUserDataView.$el);
+			$c(this.appendedUserDataView.render().el);
 			this.appendedUserDataView.$el.append(this.appendedUserDataView.render().el);
 		});
 	},

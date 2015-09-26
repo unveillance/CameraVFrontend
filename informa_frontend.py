@@ -80,6 +80,7 @@ class InformaFrontend(UnveillanceFrontend):
 			],
 			'main' : [
 				'/web/css/tabs.css',
+				'/web/css/cv_viz.css',
 				'/leaflet/leaflet.js',
 				'/web/js/lib/dropzone.js',
 				'/web/js/viz/ic_progress_notifer.js',

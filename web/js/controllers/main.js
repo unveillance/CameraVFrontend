@@ -29,6 +29,10 @@ var Main = {
 				case 'meta_header':
 				case 'meta_wrapper':
 				case 'meta_sensors':
+					if (hash == 'metadata') {
+						$c('cliuck');
+						$('#meta_header_tab a').click();
+					}
 					this.initMetadataView();
 				break;
 				case 'search':
@@ -54,54 +58,45 @@ var Main = {
 
 		if (app.docid == this.docid) { //don't render it twice
 			$c('app.docid == this.docid');
-			return;
 		}
 		fileView = new app.CameraVFileView;
 		$c('initFileView ' + app.docid);
 		$c(fileView);
 		
 		//fetch all models automatically?
-		for (thing in fileView) {
-			if (fileView[thing] instanceof Backbone.View) {
-//				fileView[thing].model.fetch();
-//				$c(fileView[thing]);
-			}
-		}
-
+		this.refreshView(fileView);
+/*
 		fileView.timeseriesMapView.model.fetch();
 		fileView.J3MHeaderView.model.fetch();
 		fileView.documentWrapperView.model.fetch();
 		fileView.appendedUserDataView.model.fetch();
-		
+*/		
 	},
 	
 	initNotesView: function() {
-		if (app.docid == this.docid) { //don't render it twice
-			return;
-		}
+		$c('render notesview');
 		notesView = new app.CameraVNotesView;
+		this.refreshView(notesView);
 	},
 	
 	initExportView: function() {
-		if (app.docid == this.docid) { //don't render it twice
-			return;
-		}
 		exportView = new app.CameraVExportView;
+		this.refreshView(exportView);
 	},
 	
 	initMetadataView: function() {
-		if (app.docid == this.docid) { //don't render it twice
-			return;
-		}
-		exportView = new app.CameraVMetadataView;
+		metadataView = new app.CameraVMetadataView;
+		this.refreshView(metadataView);
 	},
 	
 	initSearchView: function() {
-		exportView = new app.CameraVSearchView;
+		searchView = new app.CameraVSearchView;
+		this.refreshView(searchView);
 	},
 	
 	initDocumentsView: function() {
-		exportView = new app.CameraVDocumentsView;
+		docsView = new app.CameraVDocumentsView;
+		this.refreshView(docsView);
 	},
 	
 	resetDropzone: function() {
@@ -109,6 +104,15 @@ var Main = {
 		$('#clear_and_upload').hide();
 		$('#ic_import_dropzone_holder, .ic_upload_instructions').show();
 	},
+	
+	refreshView: function(viewParent) {
+		for (obj in viewParent) {
+			if (viewParent[obj] instanceof Backbone.View) {
+				viewParent[obj].model.fetch();
+				$c(viewParent[obj]);
+			}
+		}
+	}
 };
 
 jQuery(document).ready(function($) {
