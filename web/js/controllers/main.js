@@ -16,6 +16,8 @@ var Main = {
 		var rendered = $('#' + hash + '_tab').data('docid') == app.docid;
 		$('#' + hash + '_tab').data('docid', app.docid);
 		
+		$c(rendered);
+		
 
 		if (app.docid && !rendered) {
 			switch (hash) {
@@ -43,6 +45,9 @@ var Main = {
 			}
 		}
 
+		if (hash.substring(0,4) == 'meta') {//pretty hacky
+			$('#metadata_holder .controls li').data('docid', app.docid);
+		}
 		if (hash == 'metadata' && !rendered) {
 			$('#meta_header_tab a').click();
 		}
@@ -83,11 +88,15 @@ var Main = {
 	
 	initMetadataView: function() {
 		metadataView = new app.CameraVMetadataView;
-		this.refreshView(metadataView);
+//		this.refreshView(metadataView);
 		metadataView.lineChartMultiView.model.get("pressureAltitude").fetch();
 		metadataView.lineChartMultiView.model.get("lightMeter").fetch();
 		metadataView.lineChartMultiView.model.get("Accelerometer").fetch();
 		metadataView.lineChartMultiView.model.get("pressureHPAOrMBAR").fetch();
+
+		metadataView.J3MHeaderView.model.fetch();
+		metadataView.documentWrapperView.model.fetch();
+		metadataView.documentSourceView.model.fetch({url: '/files/.data/' + app.docid + '/j3m.json'});
 
 	},
 	
@@ -105,7 +114,7 @@ var Main = {
 		dropzones[0].dropzone.removeAllFiles();	
 		$('#clear_and_upload').hide();
 		$('#ic_import_dropzone_holder, .ic_upload_instructions').show();
-		$('#ic_gps_coords_view_holder').html('');
+		$('#ic_gps_coords_view_holder').html('').append($('<div/>').attr("id", "mapZoom"));
 		$('#metadata_tab, #notes_tab, #export_tab').addClass('disabled');
 		window.location.hash = 'file';
 		app.docid = false;

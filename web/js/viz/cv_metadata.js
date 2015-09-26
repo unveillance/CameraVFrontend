@@ -14,6 +14,13 @@ app.CameraVMetadataView = Backbone.View.extend({
 				id: app.docid
 			})
 		});
+		
+		this.documentSourceView = new app.InformaCamDocumentSourceView({
+			model: new Backbone.Model({
+				id: app.docid
+			})
+		});
+
 
 		/* MULTI-VIEW LINE CHART */	
 				// http://stackoverflow.com/questions/7385629/backbone-js-complex-views-combining-multiple-models
@@ -73,8 +80,11 @@ app.CameraVMetadataView = Backbone.View.extend({
 				$c(app.docid);
 				$c(view);
 			});
-//			view.model.fetch();
 		}, this);
 
+		this.listenTo(this.documentSourceView.model, 'change', function() {
+			this.documentSourceView.$el.append(this.documentSourceView.render().el);
+			$c('change documentSourceView');
+		});
 	},
 });

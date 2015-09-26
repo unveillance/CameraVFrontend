@@ -18,15 +18,15 @@
 }
 
 #ic_documentwrapper_view_holder span.verify_unknown {
-	color:#555;
+	color:#BBB;
 }
 
 #ic_documentwrapper_view_holder span.verify_passed {
-	color:#0D0;
+	color:#2F2;
 }
 
 #ic_documentwrapper_view_holder span.verify_failed {
-	color:#D00;
+	color:#F22;
 }
 
 /*GRAPH*/
@@ -56,7 +56,7 @@
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #FFF;
   shape-rendering: crispEdges;
 }
 
@@ -83,6 +83,7 @@ g.x.axis {
 	top:0;
 	left:0;
 	height:400px;
+	width:100%;
 }
 
 #ic_linechart_view_holder #graph_controls {
@@ -101,73 +102,78 @@ g .label {
 
 .line, .line.acc_x {
   fill: none;
-  stroke:#00A;
+  stroke:#AAF;
   stroke-width: 1.5px;
 }
 
 .label.acc_x {
-	fill:#00A;
+	fill:#AAF;
 }
 
 .line.acc_y {
-	stroke:#A00;
+	stroke:#FAA;
 }
 
 .label.acc_y {
-	fill:#A00;
+	fill:#FAA;
 }
 
 .line.acc_z {
-	stroke:#0A0;
+	stroke:#AFA;
 }
 
 .label.acc_z {
-	fill:#0A0;
+	fill:#AFA;
+}
+
+
+.x.axis .tick line{
+	stroke:#FFF;
 }
 
 .line.pressureAltitude, .y.axis.pressureAltitude .tick {
-	color:#00A;
-	stroke:#00A;
+	color:#AAF;
+	stroke:#AAF;
 }
 
 .label.pressureAltitude {
-	fill:#00A;
+	fill:#AAF;
 }
 
 .line.lightMeter, .y.axis.lightMeter .tick {
-	color:#0AA;
-	stroke:#0AA;
+	color:#AFF;
+	stroke:#AFF;
 }
 
 .label.lightMeter {
-	fill:#0AA;
+	fill:#AFF;
 }
 
 .line.GPSAccuracy, .y.axis.GPSAccuracy {
-	color:#A0A;
-	stroke:#A0A;
+	color:#FAF;
+	stroke:#FAF;
 }
 
 .label.GPSAccuracy {
-	fill:#A0A;
+	fill:#FAF;
 }
 
 .line.GPSBearing, .y.axis.GPSBearing {
-	color:#AA0;
-	stroke:#AA0;
+	color:#FFA;
+	stroke:#FFA;
 }
 
 .label.GPSBearing {
-	fill:#AA0;
+	fill:#FFA;
 }
 
 .line.pressureHPAOrMBAR, .y.axis.pressureHPAOrMBAR .tick {
-	color:#0A0;
-	stroke:#0A0;
+	color:#AFA;
+	stroke:#AFA;
 }
 
 .label.pressureHPAOrMBAR {
-	fill:#0A0;
+	fill:#AFA;
 }
 
 #ic_appended_user_data ul {
@@ -193,7 +199,7 @@ g .label {
 }
 
 .tsv_export td.no_export, .tsv_export th.no_export {
-	color:#CCC;
+	color:#333;
 }
 
 #ic_submission_view_holder #ic_tsv_timestampdata h4 {

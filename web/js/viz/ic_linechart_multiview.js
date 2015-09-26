@@ -93,6 +93,7 @@ app.InformaCamLineChartMultiView = Backbone.View.extend({
 		svg.append("g")
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + this.height + ")")
+			.style('fill', '#FFF')
 			.call(xAxis);
 
 		svg.append("g")
@@ -105,6 +106,7 @@ app.InformaCamLineChartMultiView = Backbone.View.extend({
 			.attr("y", 6)
 			.attr("dy", "-2em")
 			.attr("transform", "rotate(-90)")
+//			.style('fill', '#FFF')
 			.text(niceDataUnits[div_id]);
 		
 		_.each(model.get("keys"), function(key) {
