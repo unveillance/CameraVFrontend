@@ -34,16 +34,8 @@ app.CameraVFileView = Backbone.View.extend({
 				id: app.docid
 			}),
 			el: '#ic_gps_coords_view_holder',
-			header: 'GPS Coordinates',
 		});
 		
-		this.InformaCamProgressNotifierView = new app.InformaCamProgressNotifierView({
-			model: new InformaCamNotifier(),
-			el: '#ic_progressNotifierViewHolder',
-		});		
-		
-
-
 		//LISTENERS
 		
 		views = [this.timeseriesMapView, ];
@@ -58,10 +50,6 @@ app.CameraVFileView = Backbone.View.extend({
 //			view.model.fetch();
 		}, this);
 		
-		
-		this.InformaCamProgressNotifierView.model.get('message_map').push(
-			_.bind(this.InformaCamProgressNotifierView.render, this.InformaCamProgressNotifierView)
-		);
 		
 /*
 		this.listenTo(this.documentSourceView.model, 'change', function() {

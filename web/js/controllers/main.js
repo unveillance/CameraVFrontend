@@ -6,15 +6,18 @@ function failOut() {
 }
 
 var Main = {
-	docid: null, //used to keep track of when document changes
 	routePage: function(hash) {
+		$c(hash);
 		var location = hash;
 		if (app.docid) {
 			location += '&_id=' + app.docid;
 		}
 		window.location.hash = location;
+		var rendered = $('#' + hash + '_tab').data('docid') == app.docid;
+		$('#' + hash + '_tab').data('docid', app.docid);
+		
 
-		if (app.docid !== undefined) {
+		if (app.docid && !rendered) {
 			switch (hash) {
 				case 'file':
 					this.initFileView();
@@ -29,10 +32,6 @@ var Main = {
 				case 'meta_header':
 				case 'meta_wrapper':
 				case 'meta_sensors':
-					if (hash == 'metadata') {
-						$c('cliuck');
-						$('#meta_header_tab a').click();
-					}
 					this.initMetadataView();
 				break;
 				case 'search':
@@ -42,23 +41,21 @@ var Main = {
 					this.initDocumentsView();
 				break;
 			}
-			this.docid = app.docid;
+		}
+
+		if (hash == 'metadata' && !rendered) {
+			$('#meta_header_tab a').click();
 		}
 	},
 	
 	initFileView: function() {
-		if (this.docid == null) { //init search
-			$('#clear_and_upload').hide();
-			$('#ic_import_dropzone_holder').show();
-			$c('this.docid == null');
+		if (!app.docid) { //init dropzone
+			this.resetDropzone();
 		}
 
 		$('#clear_and_upload').show();
 		$('#ic_import_dropzone_holder').hide();
 
-		if (app.docid == this.docid) { //don't render it twice
-			$c('app.docid == this.docid');
-		}
 		fileView = new app.CameraVFileView;
 		$c('initFileView ' + app.docid);
 		$c(fileView);
@@ -87,6 +84,11 @@ var Main = {
 	initMetadataView: function() {
 		metadataView = new app.CameraVMetadataView;
 		this.refreshView(metadataView);
+		metadataView.lineChartMultiView.model.get("pressureAltitude").fetch();
+		metadataView.lineChartMultiView.model.get("lightMeter").fetch();
+		metadataView.lineChartMultiView.model.get("Accelerometer").fetch();
+		metadataView.lineChartMultiView.model.get("pressureHPAOrMBAR").fetch();
+
 	},
 	
 	initSearchView: function() {
@@ -103,6 +105,10 @@ var Main = {
 		dropzones[0].dropzone.removeAllFiles();	
 		$('#clear_and_upload').hide();
 		$('#ic_import_dropzone_holder, .ic_upload_instructions').show();
+		$('#ic_gps_coords_view_holder').html('');
+		$('#metadata_tab, #notes_tab, #export_tab').addClass('disabled');
+		window.location.hash = 'file';
+		app.docid = false;
 	},
 	
 	refreshView: function(viewParent) {
@@ -116,6 +122,7 @@ var Main = {
 };
 
 jQuery(document).ready(function($) {
+	app.docid = false;
 
 	try {
 		updateConf();

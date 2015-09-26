@@ -3,14 +3,15 @@ var app = app || {};//global Backbone
 app.CameraVExportView = Backbone.View.extend({
 	el: '#cv_export_view_holder',
 	initialize: function() {
+	/*
 		this.timeseriesMapView = new app.InformaCamJ3MTimeseriesMapView({
 			model: new app.InformaCamJ3MTimeStampedData({
 				urlRoot: '/GPSData',
 				id: app.docid
 			}),
 			el: '#ic_gps_coords_view_holder',
-			header: 'GPS Coordinates',
 		});
+	*/
 		
 		this.J3MHeaderView = new app.InformaCamJ3MHeaderView({
 			model: new app.InformaCamJ3MHeader({
@@ -33,7 +34,7 @@ app.CameraVExportView = Backbone.View.extend({
 
 		//LISTENERS
 		
-		views = [this.J3MHeaderView, this.timeseriesMapView, this.documentWrapperView];
+		views = [this.J3MHeaderView, this.documentWrapperView];
 		
 		_.each(views, function(view) {
 			this.listenTo(view.model, 'change', function() {

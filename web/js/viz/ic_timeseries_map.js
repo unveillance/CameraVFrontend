@@ -3,7 +3,6 @@ var app = app || {};//global Backbone
 app.InformaCamJ3MTimeseriesMapView = Backbone.View.extend({
 	initialize: function(options) {
 		this.maps = [];
-		this.header = options.header;
 
 		this.overviewIcon = L.icon({
 			iconUrl: '/web/images/ic_map_icon.png',
@@ -24,9 +23,8 @@ app.InformaCamJ3MTimeseriesMapView = Backbone.View.extend({
 		});
 	},
 	render: function() {
-		this.$el.prepend('<h2>' + this.header + '</h2>');
 		this.json = {values: this.model.get("values")};
-		this.loadMap('mapOverview', [this.json.values[0]], 4);
+//		this.loadMap('mapOverview', [this.json.values[0]], 4);
 		this.loadMap('mapZoom', this.json.values, 19);
 		return this;
 	},
