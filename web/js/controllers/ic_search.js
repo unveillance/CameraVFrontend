@@ -37,6 +37,7 @@ var Search = {
 		$('#results_list a').click(function(e) {
 			e.preventDefault();
 			app.docid = $($(this).siblings('input[type=checkbox]')[0]).attr('data-hash');
+//			Main.resetDropzone();
 			$('#file_tab a').click();
 		});
 

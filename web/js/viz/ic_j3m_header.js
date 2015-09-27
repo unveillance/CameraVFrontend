@@ -5,7 +5,7 @@ app.InformaCamJ3MHeaderView = Backbone.View.extend({
 	template: getTemplate("j3m_header.html"),
 	render: function() {
 		json = this.model.toJSON().data;
-		json.URL = document.URL;
+		json.URL = document.location.origin + '/#file&_id=' + app.docid;
 		json.genealogy.dateFormatted = moment(Number(json.genealogy.dateCreated)).format("MM/DD/YYYY HH:mm:ss");
 		html = Mustache.to_html(this.template, json);
 		$('#ic_header_view_holder').addClass("rendered");

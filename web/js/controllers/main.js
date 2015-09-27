@@ -52,8 +52,11 @@ var Main = {
 	initFileView: function() {
 		if (!app.docid) { //init dropzone
 			this.resetDropzone();
+		} else {
+			$('#tabs .controls li').removeClass('disabled');
 		}
-
+		$('#mapZoom').remove();
+		$('#ic_gps_coords_view_holder').html('').append($('<div/>').attr("id", "mapZoom"));
 		$('#clear_and_upload').show();
 		$('#ic_import_dropzone_holder').hide();
 		$('#dz_errormessage').html('');
@@ -148,7 +151,6 @@ jQuery(document).ready(function($) {
 	var h = window.location.hash.substring(1).split('&')[0];
 	if (h == 'documents' || h == 'file' || h == 'search' || app.docid) {
 		if (app.docid) {
-			$('#tabs .controls li').removeClass('disabled');
 		}
 		$('ul.controls li').removeClass('active');
 		$('ul.controls li#' + h + '_tab').addClass('active');
