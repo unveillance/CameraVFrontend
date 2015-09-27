@@ -15,7 +15,7 @@ var Main = {
 		var rendered = $('#' + hash + '_tab').data('docid') == app.docid;
 		$('#' + hash + '_tab').data('docid', app.docid);		
 
-		if (app.docid && !rendered) {
+		if (hash == 'search' || hash == 'documents' || (app.docid && !rendered)) {
 			switch (hash) {
 				case 'file':
 					this.initFileView();
@@ -98,8 +98,8 @@ var Main = {
 	},
 	
 	initDocumentsView: function() {
-//		docsView = new app.CameraVDocumentsView;
-//		this.refreshView(docsView);
+		docsView = new app.CameraVDocumentsView;
+		docsView.documentBrowserView.model.fetch({type:'POST'});
 	},
 	
 	resetDropzone: function(message) {

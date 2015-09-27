@@ -4,9 +4,11 @@ app.InformaCamImageView = Backbone.View.extend({
 	el: '#ic_image_holder',
 	render: function() {
 		var json = this.model.toJSON().data;
-//		this.$el.css('background-image', 'url(med_' + json.file_name + '.jpg)');
+		img = 'file/' + json.base_path + '/med_' + json.file_name + '.jpg';
+		$c(json);
+		$c(img);
+//		this.$el.css('background-image', 'url(' + img + ')');
 		this.$el.css('background-image', 'url(http://localhost:8888/web/images/bt_search_plus.png)');
-		$c(this.$el);
 		return this;
 	},
 });
