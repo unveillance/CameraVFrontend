@@ -6,7 +6,7 @@ console.log(window.location.search); //?doc_type=uv_document
 var Search = {
 	onConfLoaded: function() {
 		$("#search_content").prepend(getTemplate("search.html", null, "/web/layout/views/module/"));
-	
+		
 		window.setTimeout(function() {
 			search = new InformaCamSearch({
 				search_el : $("#ic_visual_search_holder"),
@@ -29,15 +29,15 @@ var Search = {
 				{ doc_stub : doc.mime_type == "application/pgp" ? "source" : "submission" });
 		});
 			
-		$("#ic_search_results_holder").
+		$("#ic_search_results_holder").empty().
 			append(Mustache.to_html(getTemplate("search_result.html"), search_result));
 
-		$("#ic_export_holder").append(getTemplate("export.html"));
+//		$("#ic_export_holder").append(getTemplate("export.html"));
 		
 		$('#results_list a').click(function(e) {
 			e.preventDefault();
-			app.docid = $($(this).siblings('input[type=checkbox]')[0]).attr('data-hash');
-//			Main.resetDropzone();
+//			app.docid = $($(this).siblings('input[type=checkbox]')[0]).attr('data-hash');
+			app.docid = $(this).attr('data-hash');
 			$('#file_tab a').click();
 		});
 

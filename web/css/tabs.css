@@ -273,6 +273,14 @@ and (max-device-width : 480px) {
 	color:#DDD;
 }
 
+#tabs ul#results_list {
+	margin:12px 0 0 0;
+}
+
+#results_list li {
+	line-height:21px;
+}
+
 
 /* SEARCH MOCKUP 9/20015 JONNY */
 .search_button {

@@ -60,7 +60,7 @@ var Main = {
 		$('#clear_and_upload').show();
 		$('#ic_import_dropzone_holder').hide();
 		$('#dz_errormessage').html('');
-		$('#ic_photo_holder').css('background-image', 'url(web/images/bt_search_minus.png)');
+		$('#ic_image_holder').css('background-image', 'url(web/images/bt_search_minus.png)');
 
 		fileView = new app.CameraVFileView;
 		
@@ -107,7 +107,7 @@ var Main = {
 		$('#clear_and_upload').hide();
 		$('#ic_import_dropzone_holder, #ic_upload_instructions_holder').show();
 		$('#ic_gps_coords_view_holder').html('').append($('<div/>').attr("id", "mapZoom"));
-		$('#ic_photo_holder').css('background-image', 'none');
+		$('#ic_image_holder').css('background-image', 'none');
 		$('#metadata_tab, #notes_tab, #export_tab').addClass('disabled');
 		window.location.hash = 'file';
 		app.docid = false;

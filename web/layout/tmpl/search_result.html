@@ -2,6 +2,6 @@
 <div id="ic_export_holder"></div>
 <ul id="results_list">
 	{{ #documents }}
-	<li><input type="checkbox" data-hash="{{ _id}}" /><a href="#file&_id={{ _id }}/">{{ file_name }}</a></li>
+	<li><!--<input type="checkbox" data-hash="{{ _id}}" />--><a data-hash="{{ _id}}" href="#file&_id={{ _id }}/">{{ file_name }}</a></li>
 	{{ /documents }}
 </ul>

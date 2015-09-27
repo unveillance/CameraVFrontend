@@ -28,6 +28,13 @@ app.CameraVFileView = Backbone.View.extend({
 			})
 		});
 */
+
+		this.imageView = new app.InformaCamImageView({
+			model: new app.InformaCamImage({
+				id: app.docid
+			})
+		});
+
 		this.timeseriesMapView = new app.InformaCamJ3MTimeseriesMapView({
 			model: new app.InformaCamJ3MTimeStampedData({
 				urlRoot: '/GPSData',
@@ -38,7 +45,7 @@ app.CameraVFileView = Backbone.View.extend({
 		
 		//LISTENERS
 		
-		views = [this.timeseriesMapView, ];
+		views = [this.timeseriesMapView, this.imageView, ];
 		
 		_.each(views, function(view) {
 			this.listenTo(view.model, 'change', function() {

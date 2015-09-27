@@ -90,6 +90,7 @@ class InformaFrontend(UnveillanceFrontend):
 				'/web/js/viz/ic_j3m_header.js',
 				'/web/js/viz/ic_timeseries_map.js',
 				'/web/js/viz/ic_linechart_multiview.js',
+				'/web/js/viz/ic_image.js',
 				'/web/js/viz/cv_file.js',
 				'/web/js/viz/cv_metadata.js',
 				'/web/js/viz/cv_notes.js',

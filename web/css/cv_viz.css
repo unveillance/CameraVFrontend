@@ -29,7 +29,7 @@
 	color:#F22;
 }
 
-#ic_photo_holder {
+#ic_image_holder {
 	width:49%;
 	position:absolute;
 	right:0;
@@ -203,7 +203,7 @@ g .label {
 }
 
 .tsv_export td.no_export, .tsv_export th.no_export {
-	color:#333;
+	color:#AAA;
 }
 
 #ic_submission_view_holder #ic_tsv_timestampdata h4 {

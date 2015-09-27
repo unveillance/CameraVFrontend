@@ -35,6 +35,10 @@ jQuery(document).ready(function($) {
 		}
 	});
 
+	app.InformaCamImage = Backbone.Model.extend({
+		urlRoot: '/DocumentWrapper',
+	});
+
 	app.InformaCamAppendedUserData = Backbone.Model.extend({
 		urlRoot: '/AppendedUserData',
 	});
