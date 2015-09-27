@@ -162,11 +162,12 @@ and (max-device-width : 480px) {
 
 
 
-#ic_import_dropzone_holder, #uv_import_dropzone {
-	width:90% !important;
-	height:90% !important;
+#ic_import_dropzone_holder, #uv_import_dropzone {	
 	position:absolute;
-	top:5%;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
 	z-index:100;
 }
 
@@ -203,6 +204,10 @@ and (max-device-width : 480px) {
 	position:absolute;
 }
 
+#dz_errormessage {
+	text-align:center;
+	margin-top:20px;
+}
 .ic_upload_instructions {
 	text-align:center;
 	margin-top:102px;

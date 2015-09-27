@@ -60,6 +60,7 @@ var Main = {
 
 		$('#clear_and_upload').show();
 		$('#ic_import_dropzone_holder').hide();
+		$('#dz_errormessage').html('');
 
 		fileView = new app.CameraVFileView;
 		$c('initFileView ' + app.docid);
@@ -110,14 +111,16 @@ var Main = {
 		this.refreshView(docsView);
 	},
 	
-	resetDropzone: function() {
+	resetDropzone: function(message) {
+		$c(message);
 		dropzones[0].dropzone.removeAllFiles();	
 		$('#clear_and_upload').hide();
-		$('#ic_import_dropzone_holder, .ic_upload_instructions').show();
+		$('#ic_import_dropzone_holder, #ic_upload_instructions_holder').show();
 		$('#ic_gps_coords_view_holder').html('').append($('<div/>').attr("id", "mapZoom"));
 		$('#metadata_tab, #notes_tab, #export_tab').addClass('disabled');
 		window.location.hash = 'file';
 		app.docid = false;
+		$('#dz_errormessage').html(message);
 	},
 	
 	refreshView: function(viewParent) {
@@ -198,29 +201,6 @@ jQuery(document).ready(function($) {
 	
 	} );
 	
-	$("#ic_url_search_button").click(function() {
-			//alert($("#ic_search_url").val());
-			return doInnerAjax("SubmitViaURL", "post", {
-			url : $("#ic_search_url").val() }, function(message){
-				console.log(message);
-			
-				try {
-					json = JSON.parse(message.responseText);
-				} catch(err) {
-					alert("Could not upload file from URL!");
-					return;
-				}
-			
-				if(json.result == 200) {
-					path = json.data.mime_type !== undefined && json.data.mime_type.indexOf("application/pgp") > -1 ? "/source/" : "/submission/";
-					location.href = path + json.data._id + '/';
-				} else {
-					alert("Could not upload file from URL!");
-				}
-			
-			});
-		});
-
 	dropzones = discoverICDropzones({url : "/import/"}, "#ic_import_dropzone_holder",
 		function(file, message) {
 			// onSuccess
@@ -239,6 +219,8 @@ jQuery(document).ready(function($) {
 					messagetext = "It's not you, it's us. We're looking into the problem. Please try again later. (" + message.result + ")";
 					this.disable();
 					this.removeAllFiles();
+				} else if (message.result == 404) {
+					Main.resetDropzone('The file is not in the Annex.');
 				}
 			} else {
 				messagetext = message;

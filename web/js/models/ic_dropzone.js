@@ -49,6 +49,6 @@ var InformacamDropzone = UnveillanceDropzone.extend({
 	onFileAdded: function(file) {
 		console.info("added file:");
 		console.info(file);
-		$('.ic_upload_instructions').hide();
+		$('#ic_upload_instructions_holder').hide();
 	}
 });
