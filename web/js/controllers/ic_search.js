@@ -33,6 +33,12 @@ var Search = {
 			append(Mustache.to_html(getTemplate("search_result.html"), search_result));
 
 		$("#ic_export_holder").append(getTemplate("export.html"));
+		
+		$('#results_list a').click(function(e) {
+			e.preventDefault();
+			app.docid = $($(this).siblings('input[type=checkbox]')[0]).attr('data-hash');
+			$('#file_tab a').click();
+		});
 
 		$('#ic_search_results_holder input[type=checkbox]').change(function() {
 			var hash = $(this).attr('data-hash');

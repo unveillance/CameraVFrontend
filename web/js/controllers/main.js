@@ -7,17 +7,13 @@ function failOut() {
 
 var Main = {
 	routePage: function(hash) {
-		$c(hash);
 		var location = hash;
 		if (app.docid) {
 			location += '&_id=' + app.docid;
 		}
 		window.location.hash = location;
 		var rendered = $('#' + hash + '_tab').data('docid') == app.docid;
-		$('#' + hash + '_tab').data('docid', app.docid);
-		
-		$c(rendered);
-		
+		$('#' + hash + '_tab').data('docid', app.docid);		
 
 		if (app.docid && !rendered) {
 			switch (hash) {
@@ -61,23 +57,15 @@ var Main = {
 		$('#clear_and_upload').show();
 		$('#ic_import_dropzone_holder').hide();
 		$('#dz_errormessage').html('');
+		$('#ic_photo_holder').css('background-image', 'url(web/images/bt_search_minus.png)');
 
 		fileView = new app.CameraVFileView;
-		$c('initFileView ' + app.docid);
-		$c(fileView);
 		
 		//fetch all models automatically?
 		this.refreshView(fileView);
-/*
-		fileView.timeseriesMapView.model.fetch();
-		fileView.J3MHeaderView.model.fetch();
-		fileView.documentWrapperView.model.fetch();
-		fileView.appendedUserDataView.model.fetch();
-*/		
 	},
 	
 	initNotesView: function() {
-		$c('render notesview');
 		notesView = new app.CameraVNotesView;
 		this.refreshView(notesView);
 	},
@@ -102,21 +90,21 @@ var Main = {
 	},
 	
 	initSearchView: function() {
-		searchView = new app.CameraVSearchView;
-		this.refreshView(searchView);
+//		searchView = new app.CameraVSearchView;
+//		this.refreshView(searchView);
 	},
 	
 	initDocumentsView: function() {
-		docsView = new app.CameraVDocumentsView;
-		this.refreshView(docsView);
+//		docsView = new app.CameraVDocumentsView;
+//		this.refreshView(docsView);
 	},
 	
 	resetDropzone: function(message) {
-		$c(message);
 		dropzones[0].dropzone.removeAllFiles();	
 		$('#clear_and_upload').hide();
 		$('#ic_import_dropzone_holder, #ic_upload_instructions_holder').show();
 		$('#ic_gps_coords_view_holder').html('').append($('<div/>').attr("id", "mapZoom"));
+		$('#ic_photo_holder').css('background-image', 'none');
 		$('#metadata_tab, #notes_tab, #export_tab').addClass('disabled');
 		window.location.hash = 'file';
 		app.docid = false;
@@ -127,7 +115,6 @@ var Main = {
 		for (obj in viewParent) {
 			if (viewParent[obj] instanceof Backbone.View) {
 				viewParent[obj].model.fetch();
-				$c(viewParent[obj]);
 			}
 		}
 	}
@@ -192,7 +179,6 @@ jQuery(document).ready(function($) {
 		el.parent('li').addClass('active');
 		el.parents('ul').siblings('div.active').removeClass('active');
 		$('#tabs').find(href + '_holder').addClass('active');
-		$c(app.docid);
 		
 		Main.routePage(href.substring(1));
 		

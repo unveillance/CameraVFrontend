@@ -29,28 +29,29 @@
 	color:#F22;
 }
 
+#ic_photo_holder {
+	width:49%;
+	position:absolute;
+	right:0;
+	top:15px;
+	bottom:0;
+	background-size:cover;
+	background-repeat:none;
+	background-position:center;
+}
+
 /*GRAPH*/
-.graph_holder {
-	width:45%;
-	margin-left:2.5%;
-	float:left;
-}
-
-.graph_holder:nth-child(even) {
-	clear:both;
-	margin-left:0;
-}
-
 #ic_gps_coords_view_holder {
-	width:90%;
-	clear:both;
+  	position: absolute;
+	top:15px;
+	left:0;
+	right:0;
+	bottom:0;
 }
 
 #ic_gps_coords_view_holder div.rendered {
-	height:400px;
-	width:45%;
-	margin-left:2.5%;
-	float:left;
+	height:100%;
+	width:49%;
 }
 
 .axis path,
@@ -73,8 +74,8 @@ g.x.axis {
 }
 
 #ic_linechart_view_holder {
-	width:90%;
-	clear:both;
+	width:100%;
+	height:100%;
 	position:relative;
 }
 
@@ -82,14 +83,17 @@ g.x.axis {
 	position:absolute;
 	top:0;
 	left:0;
-	height:400px;
+	height:60%;
 	width:100%;
+	min-width:857px;
+	min-height:322px;
 }
 
 #ic_linechart_view_holder #graph_controls {
 	height:100px;
 	width:722px;
-	margin:410px auto 0 auto;
+	position:absolute;
+	bottom:15px;
 }
 
 #ic_linechart_view_holder #graph_controls #graph_select {

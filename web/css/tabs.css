@@ -74,9 +74,10 @@ div.tab_content {
 
 #clear_and_upload {
 	position:absolute;
-	top:20px;
-	right:20px;
+	top:30px;
+	right:15px;
 	display:none;
+	z-index:101;
 }
 
 #metadata_holder ul {
