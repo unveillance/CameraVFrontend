@@ -8,7 +8,7 @@ function failOut() {
 var Main = {
 	routePage: function(hash) {
 		var location = hash;
-		if (app.docid) {
+		if (app.docid && hash != 'search' && hash != 'documents') {
 			location += '&_id=' + app.docid;
 		}
 		window.location.hash = location;
