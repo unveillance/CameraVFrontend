@@ -50,8 +50,6 @@ app.CameraVFileView = Backbone.View.extend({
 		_.each(views, function(view) {
 			this.listenTo(view.model, 'change', function() {
 				view.$el.append(view.render().el);
-				$c(app.docid);
-				$c(view);
 			});
 //			view.model.fetch();
 		}, this);

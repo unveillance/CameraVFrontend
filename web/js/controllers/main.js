@@ -60,7 +60,7 @@ var Main = {
 		$('#clear_and_upload').show();
 		$('#ic_import_dropzone_holder').hide();
 		$('#dz_errormessage').html('');
-		$('#ic_image_holder').css('background-image', 'url(web/images/bt_search_minus.png)');
+		$('#ic_image_holder').css('background-image', 'none');
 
 		fileView = new app.CameraVFileView;
 		
@@ -99,7 +99,12 @@ var Main = {
 	
 	initDocumentsView: function() {
 		docsView = new app.CameraVDocumentsView;
-		docsView.documentBrowserView.model.fetch();
+		$('.documents_list a').click(function(e) {
+			e.preventDefault();
+			app.docid = $(this).attr('data-hash');
+			$('#file_tab a').click();
+		});
+
 	},
 	
 	resetDropzone: function(message) {

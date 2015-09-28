@@ -260,25 +260,37 @@ and (max-device-width : 480px) {
 	margin-top:80px;
 }
 
-#ic_search_results_holder a {
+.documents_list a {
 	color:#FFF;
 	text-decoration:none;
 }
 
-#ic_search_results_holder a:hover {
+.documents_list a:hover {
 	text-decoration:underline;
 }
 
-#ic_search_results_holder a:visited {
+.documents_list a:visited {
 	color:#DDD;
 }
 
-#tabs ul#results_list {
+.documents_list h4 {
+	font-weight:bold;
+	font-size:16px;
+	margin:12px 0 -12px 0;
+}
+
+#tabs ul.documents_list {
 	margin:12px 0 0 0;
 }
 
-#results_list li {
+.documents_list li {
 	line-height:21px;
+}
+
+#tabs ul#document_browser {
+	width:50%;
+	margin:32px auto 16px auto;
+	min-width:400px;
 }
 
 

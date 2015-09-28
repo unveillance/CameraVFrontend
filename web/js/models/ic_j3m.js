@@ -44,17 +44,20 @@ jQuery(document).ready(function($) {
 	app.InformaCamDocumentBrowser = Backbone.Collection.extend({
 		model:app.InformaCamDocument,
 		url: '/documents/',
-		fetch: function() {
+		fetch: function(options) {
 			//this is only because I can't figure out how to set the xsrf token in backbone
 			var result = doInnerAjax("documents", "post", null, null, false);
-			//$c(result.data.documents);
 			_.each(result.data.documents, _.bind(function(doc) {
 				var d = new app.InformaCamDocument;
 				d.set('_id', doc._id);
 				d.set('mime_type', doc.mime_type);
+				if (doc.file_name !== undefined) {
+					d.set('file_name', doc.file_name);
+				} else {
+					d.set('file_name', doc.public_hash);
+				}
 				this.add(d);
 			}, this));
-			$c(this);
 		}
 	});
 
