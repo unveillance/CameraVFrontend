@@ -1,8 +1,6 @@
 var app = app || {};//global Backbone
 var search;
 
-
-console.log(window.location.search); //?doc_type=uv_document
 var Search = {
 	onConfLoaded: function() {
 		$("#search_content").prepend(getTemplate("search.html", null, "/web/layout/views/module/"));

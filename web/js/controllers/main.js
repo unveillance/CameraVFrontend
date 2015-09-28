@@ -99,7 +99,7 @@ var Main = {
 	
 	initDocumentsView: function() {
 		docsView = new app.CameraVDocumentsView;
-		docsView.documentBrowserView.model.fetch({type:'POST'});
+		docsView.documentBrowserView.model.fetch();
 	},
 	
 	resetDropzone: function(message) {
