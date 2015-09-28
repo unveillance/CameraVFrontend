@@ -18,6 +18,12 @@ app.CameraVExportView = Backbone.View.extend({
 			$c('this.assetBrowserView change');
 			$c(this);
 			this.assetBrowserView.render();
+		$('#assets_browser li a').click(function() {
+			$c($(this).attr('data-filename'));
+			 onDownloadRequested($(this).attr('data-filename'), $(this));
+//			getFileContent(this, [".data", app.docid, img].join('/'), function(data) {});
+		});
+
 		});
 
 	},

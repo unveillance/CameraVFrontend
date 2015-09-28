@@ -64,7 +64,6 @@ jQuery(document).ready(function($) {
 	app.InformaCamAssetBrowser = Backbone.Model.extend({
 		urlRoot: '/DocumentWrapper',
 		parse: function(response) {
-			$c(response);
 			_.each(response.data.assets, function(asset) {
 				if (asset.description == undefined) {
 					asset.description = asset.file_name;
