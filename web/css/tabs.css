@@ -265,7 +265,12 @@ and (max-device-width : 480px) {
 	text-decoration:none;
 }
 
-.documents_list a:hover {
+#assets_browser li {
+	color:#FFF;
+	cursor:pointer;
+}
+
+.documents_list a:hover, #assets_browser li:hover {
 	text-decoration:underline;
 }
 
@@ -287,7 +292,7 @@ and (max-device-width : 480px) {
 	line-height:21px;
 }
 
-#tabs ul#document_browser {
+#tabs ul#document_browser, #tabs ul#assets_browser {
 	width:50%;
 	margin:32px auto 16px auto;
 	min-width:400px;

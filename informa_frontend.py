@@ -92,6 +92,7 @@ class InformaFrontend(UnveillanceFrontend):
 				'/web/js/viz/ic_linechart_multiview.js',
 				'/web/js/viz/ic_image.js',
 				'/web/js/viz/ic_document_browser.js',
+				'/web/js/viz/ic_asset_browser.js',
 				'/web/js/viz/cv_documents.js',
 				'/web/js/viz/cv_file.js',
 				'/web/js/viz/cv_metadata.js',

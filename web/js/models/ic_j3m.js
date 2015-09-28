@@ -60,6 +60,22 @@ jQuery(document).ready(function($) {
 			}, this));
 		}
 	});
+	
+	app.InformaCamAssetBrowser = Backbone.Model.extend({
+		urlRoot: '/DocumentWrapper',
+		parse: function(response) {
+			$c(response);
+			_.each(response.data.assets, function(asset) {
+				if (asset.description == undefined) {
+					asset.description = asset.file_name;
+				}
+			});
+			response.data = response.data.assets;
+			return response;
+		},
+	});
+	
+	
 
 	app.InformaCamAppendedUserData = Backbone.Model.extend({
 		urlRoot: '/AppendedUserData',

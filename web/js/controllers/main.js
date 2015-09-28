@@ -22,15 +22,18 @@ var Main = {
 				break;
 				case 'notes':
 					this.initNotesView();
+					$('#tabs .controls li').removeClass('disabled');
 				break;
 				case 'export':
 					this.initExportView();
+					$('#tabs .controls li').removeClass('disabled');
 				break;
 				case 'metadata':
 				case 'meta_header':
 				case 'meta_wrapper':
 				case 'meta_sensors':
 					this.initMetadataView();
+					$('#tabs .controls li').removeClass('disabled');
 				break;
 				case 'search':
 					this.initSearchView();
